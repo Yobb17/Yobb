@@ -1,4 +1,1698 @@
-# Yobb
+# Yobb<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    
+      <title>ERC-1155: Multi Token Standard</title>
+      <meta propery="og:title" content="ERC-1155: Multi Token Standard">
+    
+    <meta name="description" content="">
+    <meta property="og:description" content="">
+    <meta name="twitter:description" content="">
+  
+  <meta name="generator" content="Jekyll">
+  <meta property="og:locale" content="en_US">
+  <link rel="canonical" href="https://eips.ethereum.org/EIPS/eip-1155">
+  <meta property="og:url" content="https://eips.ethereum.org/EIPS/eip-1155">
+  <meta property="og:site_name" content="Ethereum Improvement Proposals">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@">
+  <script type="application/ld+json">
+    {
+      "@type": "WebSite",
+      "url": "https://eips.ethereum.org",
+      "name": "Ethereum Improvement Proposals",
+      "description": "Ethereum Improvement Proposals (EIPs) describe standards for the Ethereum platform, including core protocol specifications, client APIs, and contract standards.",
+      "@context": "https://schema.org"
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://eips.ethereum.org/feed.xml" title="Ethereum Improvement Proposals"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/css/override.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", (event) => {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    });
+  </script>
+  <script type="text/javascript">
+    window.MathJax = {
+      loader: {
+        load: ['input/tex-base', 'output/chtml']
+      },
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']],
+        processEscapes: true,
+        processEnvironments: false,
+        processRefs: false
+      }
+    };
+  </script>
+  <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js" integrity="sha384-/1zmJ1mBdfKIOnwPxpdG6yaRrxP6qu3eVYm0cz2nOx+AcL4d3AqEFrwcqGZVVroG" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/citation-js/0.6.7/citation.min.js" integrity="sha512-N+LDFMa9owHXGS+CyMrBvuxq2QuGl3fiB/7cys3aUEL7K6P1soHGqsS0sjHXZpwNd9Kz0m3R4IPy1HYRi6ROEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript">
+    addEventListener('DOMContentLoaded', async () => {
+      const Cite = window.require('citation-js');
+      const citationElements = document.querySelectorAll('.language-csl-json');
+      for (let citationElement of citationElements) {
+        try {
+          const citation = await Cite.async(citationElement);
+          const template = document.createElement('template');
+          template.innerHTML = citation.format('bibliography', {
+            format: 'html',
+            template: 'apa',
+            lang: 'en-US'
+          });
+          if (citationElement.parentElement && citationElement.parentElement.matches('pre')) {
+            citationElement.parentElement.replaceWith(template.content);
+          } else {
+            citationElement.replaceWith(template.content);
+          }
+        } catch (e) {
+          console.error("unable to render citation", e);
+        }
+      }
+    });
+  </script>
+<style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: inline-block;
+  width: 0;
+}
+
+.mjx-n mjx-c {
+  font-family: MJXZERO, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-i mjx-c {
+  font-family: MJXZERO, MJXTEX-I, MJXTEX-MI, MJXTEX, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-b mjx-c {
+  font-family: MJXZERO, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-b.mjx-i mjx-c {
+  font-family: MJXZERO, MJXTEX-BI, MJXTEX-B, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-cal mjx-c {
+  font-family: MJXZERO, MJXTEX-C, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-cal.mjx-b mjx-c {
+  font-family: MJXZERO, MJXTEX-C-B, MJXTEX-C, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-ds mjx-c {
+  font-family: MJXZERO, MJXTEX-A, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1;
+}
+
+.mjx-fr mjx-c {
+  font-family: MJXZERO, MJXTEX-FR, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-fr.mjx-b mjx-c {
+  font-family: MJXZERO, MJXTEX-FR-B, MJXTEX-FR, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-sc mjx-c {
+  font-family: MJXZERO, MJXTEX-SC, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-sc.mjx-b mjx-c {
+  font-family: MJXZERO, MJXTEX-SC-B, MJXTEX-SC, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-ss mjx-c {
+  font-family: MJXZERO, MJXTEX-SS, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-ss.mjx-b mjx-c {
+  font-family: MJXZERO, MJXTEX-SS-B, MJXTEX-SS, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-ss.mjx-i mjx-c {
+  font-family: MJXZERO, MJXTEX-SS-I, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-ss.mjx-b.mjx-i mjx-c {
+  font-family: MJXZERO, MJXTEX-SS-B, MJXTEX-SS-I, MJXTEX-BI, MJXTEX-B, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-ty mjx-c {
+  font-family: MJXZERO, MJXTEX-T, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-var mjx-c {
+  font-family: MJXZERO, MJXTEX-A, MJXTEX, MJXTEX-I, MJXTEX-S1;
+}
+
+.mjx-os mjx-c {
+  font-family: MJXZERO, MJXTEX-C, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-os.mjx-b mjx-c {
+  font-family: MJXZERO, MJXTEX-C-B, MJXTEX-C, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-mit mjx-c {
+  font-family: MJXZERO, MJXTEX-MI, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-lop mjx-c {
+  font-family: MJXZERO, MJXTEX-S2, MJXTEX-S1, MJXTEX, MJXTEX-I, MJXTEX-A;
+}
+
+.mjx-sop mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX, MJXTEX-I, MJXTEX-A;
+}
+
+.mjx-s3 mjx-c {
+  font-family: MJXZERO, MJXTEX-S3, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.mjx-s4 mjx-c {
+  font-family: MJXZERO, MJXTEX-S4, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-C-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FR-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SS-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SS-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Ethereum Improvement Proposals</a><nav class="site-nav d-flex">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger row p-2"><a class="page-link col" href="/all">All</a><a class="page-link col" href="/core">Core</a><a class="page-link col" href="/networking">Networking</a><a class="page-link col" href="/interface">Interface</a><a class="page-link col" href="/erc">ERC</a><a class="page-link col" href="/meta">Meta</a><a class="page-link col" href="/informational">Informational</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="bi-megaphone-fill" fill="currentColor" viewBox="0 0 16 16">
+    <title>Alert</title>
+    <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
+  </symbol>
+  <symbol id="bi-code" fill="currentColor" viewBox="0 0 16 16">
+    <title>Source</title>
+    <path d="M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708-.708L13.293 8l-3.147-3.146z"></path>
+  </symbol>
+  <svg id="bi-chat" fill="currentColor" viewBox="0 0 16 16">
+    <title>Discuss</title>
+    <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"></path>
+  </svg>
+</svg>
+
+<div class="home">
+  <span class="h5">
+    
+    
+    
+    
+    
+      <a class="badge text-light bg-primary" data-bs-toggle="tooltip" data-bs-title="Application-level standards and conventions, including contract standards such as token standards, name registries, URI schemes, library/package formats, and wallet formats." href="../erc">Standards Track: ERC</a>
+    
+  </span>
+  <h1 class="page-heading">
+    
+      ERC-1155: Multi Token Standard
+    
+    <a href="https://github.com/ethereum/EIPs/issues/1155" class="no-underline">
+      <svg role="img" aria-label="Discuss" class="inline-svg" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <use xlink:href="#bi-chat"></use>
+      </svg>
+    </a>
+    <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md" class="no-underline">
+      <svg role="img" aria-label="Source" class="inline-svg" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <use xlink:href="#bi-code"></use>
+      </svg>
+    </a>
+  </h1>
+  <h3></h3>
+  <table class="table table-borderless preamble">
+    <tbody>
+      <tr>
+        <th scope="row">Authors</th>
+        <td>Witek Radomski&nbsp;&lt;<a href="mailto:witek@enjin.io">witek@enjin.io</a>&gt;, Andrew Cooke&nbsp;&lt;<a href="mailto:ac0dem0nk3y@gmail.com">ac0dem0nk3y@gmail.com</a>&gt;, Philippe Castonguay (@phabc)&nbsp;&lt;<a href="mailto:pc@horizongames.net">pc@horizongames.net</a>&gt;, James Therien&nbsp;&lt;<a href="mailto:james@turing-complete.com">james@turing-complete.com</a>&gt;, Eric Binet&nbsp;&lt;<a href="mailto:eric@enjin.io">eric@enjin.io</a>&gt;, Ronan Sandford (@wighawag)&nbsp;&lt;<a href="mailto:wighawag@gmail.com">wighawag@gmail.com</a>&gt;</td>
+      </tr>
+      
+        <tr>
+          <th scope="row">Created</th>
+          <td>2018-06-17</td>
+        </tr>
+      
+      
+      
+      
+        <tr>
+          <th scope="row">Requires</th>
+          <td>
+
+  <a href="eip-165">EIP-165</a>
+
+</td>
+        </tr>
+      
+    </tbody>
+  </table>
+  <br>
+
+  
+
+  <div class="toc">
+    <h2>Table of Contents</h2>
+    <ul>
+  <li><a href="#simple-summary">Simple Summary</a></li>
+  <li><a href="#abstract">Abstract</a></li>
+  <li><a href="#motivation">Motivation</a></li>
+  <li><a href="#specification">Specification</a>
+    <ul>
+      <li><a href="#erc-1155-token-receiver">ERC-1155 Token Receiver</a></li>
+      <li><a href="#safe-transfer-rules">Safe Transfer Rules</a></li>
+      <li><a href="#metadata">Metadata</a></li>
+      <li><a href="#approval">Approval</a></li>
+    </ul>
+  </li>
+  <li><a href="#rationale">Rationale</a>
+    <ul>
+      <li><a href="#metadata-choices">Metadata Choices</a></li>
+      <li><a href="#upgrades">Upgrades</a></li>
+      <li><a href="#design-decision-supporting-non-batch">Design decision: Supporting non-batch</a></li>
+      <li><a href="#design-decision-safe-transfers-only">Design decision: Safe transfers only</a></li>
+      <li><a href="#guaranteed-log-trace">Guaranteed log trace</a></li>
+      <li><a href="#approval-1">Approval</a></li>
+    </ul>
+  </li>
+  <li><a href="#backwards-compatibility">Backwards Compatibility</a></li>
+  <li><a href="#usage">Usage</a>
+    <ul>
+      <li><a href="#batch-transfers">Batch Transfers</a></li>
+      <li><a href="#batch-balance">Batch Balance</a></li>
+      <li><a href="#enumerating-from-events">Enumerating from events</a></li>
+      <li><a href="#non-fungible-tokens">Non-Fungible Tokens</a></li>
+    </ul>
+  </li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#copyright">Copyright</a></li>
+</ul>
+
+  </div>
+
+  <h2 id="simple-summary">
+      
+      
+        <a href="#simple-summary" class="anchor-link"></a> Simple Summary
+      
+      
+    </h2>
+
+<p>A standard interface for contracts that manage multiple token types. A single deployed contract may include any combination of fungible tokens, non-fungible tokens or other configurations (e.g. semi-fungible tokens).</p>
+  
+    <h2 id="abstract">
+      
+      
+        <a href="#abstract" class="anchor-link"></a> Abstract
+      
+      
+    </h2>
+
+<p>This standard outlines a smart contract interface that can represent any number of fungible and non-fungible token types. Existing standards such as ERC-20 require deployment of separate contracts per token type. The ERC-721 standard’s token ID is a single non-fungible index and the group of these non-fungibles is deployed as a single contract with settings for the entire collection. In contrast, the ERC-1155 Multi Token Standard allows for each token ID to represent a new configurable token type, which may have its own metadata, supply and other attributes.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">_id</code> argument contained in each function’s argument set indicates a specific token or token type in a transaction.</p>
+  
+    <h2 id="motivation">
+      
+      
+        <a href="#motivation" class="anchor-link"></a> Motivation
+      
+      
+    </h2>
+
+<p>Tokens standards like ERC-20 and ERC-721 require a separate contract to be deployed for each token type or collection. This places a lot of redundant bytecode on the Ethereum blockchain and limits certain functionality by the nature of separating each token contract into its own permissioned address. With the rise of blockchain games and platforms like Enjin Coin, game developers may be creating thousands of token types, and a new type of token standard is needed to support them. However, ERC-1155 is not specific to games and many other applications can benefit from this flexibility.</p>
+
+<p>New functionality is possible with this design such as transferring multiple token types at once, saving on transaction costs. Trading (escrow / atomic swaps) of multiple tokens can be built on top of this standard and it removes the need to “approve” individual token contracts separately. It is also easy to describe and mix multiple fungible or non-fungible token types in a single contract.</p>
+  
+    <h2 id="specification">
+      
+      
+        <a href="#specification" class="anchor-link"></a> Specification
+      
+      
+    </h2>
+
+<p>The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in RFC 2119.</p>
+
+<p><strong>Smart contracts implementing the ERC-1155 standard MUST implement all of the functions in the <code class="language-plaintext highlighter-rouge">ERC1155</code> interface.</strong></p>
+
+<p><strong>Smart contracts implementing the ERC-1155 standard MUST implement the ERC-165 <code class="language-plaintext highlighter-rouge">supportsInterface</code> function and MUST return the constant value <code class="language-plaintext highlighter-rouge">true</code> if <code class="language-plaintext highlighter-rouge">0xd9b67a26</code> is passed through the <code class="language-plaintext highlighter-rouge">interfaceID</code> argument.</strong></p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">9</span><span class="p">;</span>
+
+<span class="cm">/**
+    @title ERC-1155 Multi Token Standard
+    @dev See https://eips.ethereum.org/EIPS/eip-1155
+    Note: The ERC-165 identifier for this interface is 0xd9b67a26.
+ */</span>
+<span class="k">interface</span> <span class="n">ERC1155</span> <span class="cm">/* is ERC165 */</span> <span class="p">{</span>
+    <span class="cm">/**
+        @dev Either `TransferSingle` or `TransferBatch` MUST emit when tokens are transferred, including zero value transfers as well as minting or burning (see "Safe Transfer Rules" section of the standard).
+        The `_operator` argument MUST be the address of an account/contract that is approved to make the transfer (SHOULD be msg.sender).
+        The `_from` argument MUST be the address of the holder whose balance is decreased.
+        The `_to` argument MUST be the address of the recipient whose balance is increased.
+        The `_id` argument MUST be the token type being transferred.
+        The `_value` argument MUST be the number of tokens the holder balance is decreased by and match what the recipient balance is increased by.
+        When minting/creating tokens, the `_from` argument MUST be set to `0x0` (i.e. zero address).
+        When burning/destroying tokens, the `_to` argument MUST be set to `0x0` (i.e. zero address).        
+    */</span>
+    <span class="k">event</span> <span class="n">TransferSingle</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_operator</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_from</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_to</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_id</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_value</span><span class="p">);</span>
+
+    <span class="cm">/**
+        @dev Either `TransferSingle` or `TransferBatch` MUST emit when tokens are transferred, including zero value transfers as well as minting or burning (see "Safe Transfer Rules" section of the standard).      
+        The `_operator` argument MUST be the address of an account/contract that is approved to make the transfer (SHOULD be msg.sender).
+        The `_from` argument MUST be the address of the holder whose balance is decreased.
+        The `_to` argument MUST be the address of the recipient whose balance is increased.
+        The `_ids` argument MUST be the list of tokens being transferred.
+        The `_values` argument MUST be the list of number of tokens (matching the list and order of tokens specified in _ids) the holder balance is decreased by and match what the recipient balance is increased by.
+        When minting/creating tokens, the `_from` argument MUST be set to `0x0` (i.e. zero address).
+        When burning/destroying tokens, the `_to` argument MUST be set to `0x0` (i.e. zero address).                
+    */</span>
+    <span class="k">event</span> <span class="n">TransferBatch</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_operator</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_from</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_to</span><span class="p">,</span> <span class="kt">uint256</span><span class="p">[]</span> <span class="n">_ids</span><span class="p">,</span> <span class="kt">uint256</span><span class="p">[]</span> <span class="n">_values</span><span class="p">);</span>
+
+    <span class="cm">/**
+        @dev MUST emit when approval for a second party/operator address to manage all tokens for an owner address is enabled or disabled (absence of an event assumes disabled).        
+    */</span>
+    <span class="k">event</span> <span class="n">ApprovalForAll</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_owner</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_operator</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">_approved</span><span class="p">);</span>
+
+    <span class="cm">/**
+        @dev MUST emit when the URI is updated for a token ID.
+        URIs are defined in RFC 3986.
+        The URI MUST point to a JSON file that conforms to the "ERC-1155 Metadata URI JSON Schema".
+    */</span>
+    <span class="k">event</span> <span class="n">URI</span><span class="p">(</span><span class="kt">string</span> <span class="n">_value</span><span class="p">,</span> <span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">_id</span><span class="p">);</span>
+
+    <span class="cm">/**
+        @notice Transfers `_value` amount of an `_id` from the `_from` address to the `_to` address specified (with safety call).
+        @dev Caller must be approved to manage the tokens being transferred out of the `_from` account (see "Approval" section of the standard).
+        MUST revert if `_to` is the zero address.
+        MUST revert if balance of holder for token `_id` is lower than the `_value` sent.
+        MUST revert on any other error.
+        MUST emit the `TransferSingle` event to reflect the balance change (see "Safe Transfer Rules" section of the standard).
+        After the above conditions are met, this function MUST check if `_to` is a smart contract (e.g. code size &gt; 0). If so, it MUST call `onERC1155Received` on `_to` and act appropriately (see "Safe Transfer Rules" section of the standard).        
+        @param _from    Source address
+        @param _to      Target address
+        @param _id      ID of the token type
+        @param _value   Transfer amount
+        @param _data    Additional data with no specified format, MUST be sent unaltered in call to `onERC1155Received` on `_to`
+    */</span>
+    <span class="k">function</span> <span class="n">safeTransferFrom</span><span class="p">(</span><span class="kt">address</span> <span class="n">_from</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_to</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_id</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_value</span><span class="p">,</span> <span class="kt">bytes</span> <span class="k">calldata</span> <span class="n">_data</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="cm">/**
+        @notice Transfers `_values` amount(s) of `_ids` from the `_from` address to the `_to` address specified (with safety call).
+        @dev Caller must be approved to manage the tokens being transferred out of the `_from` account (see "Approval" section of the standard).
+        MUST revert if `_to` is the zero address.
+        MUST revert if length of `_ids` is not the same as length of `_values`.
+        MUST revert if any of the balance(s) of the holder(s) for token(s) in `_ids` is lower than the respective amount(s) in `_values` sent to the recipient.
+        MUST revert on any other error.        
+        MUST emit `TransferSingle` or `TransferBatch` event(s) such that all the balance changes are reflected (see "Safe Transfer Rules" section of the standard).
+        Balance changes and events MUST follow the ordering of the arrays (_ids[0]/_values[0] before _ids[1]/_values[1], etc).
+        After the above conditions for the transfer(s) in the batch are met, this function MUST check if `_to` is a smart contract (e.g. code size &gt; 0). If so, it MUST call the relevant `ERC1155TokenReceiver` hook(s) on `_to` and act appropriately (see "Safe Transfer Rules" section of the standard).                      
+        @param _from    Source address
+        @param _to      Target address
+        @param _ids     IDs of each token type (order and length must match _values array)
+        @param _values  Transfer amounts per token type (order and length must match _ids array)
+        @param _data    Additional data with no specified format, MUST be sent unaltered in call to the `ERC1155TokenReceiver` hook(s) on `_to`
+    */</span>
+    <span class="k">function</span> <span class="n">safeBatchTransferFrom</span><span class="p">(</span><span class="kt">address</span> <span class="n">_from</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_to</span><span class="p">,</span> <span class="kt">uint256</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">_ids</span><span class="p">,</span> <span class="kt">uint256</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">_values</span><span class="p">,</span> <span class="kt">bytes</span> <span class="k">calldata</span> <span class="n">_data</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="cm">/**
+        @notice Get the balance of an account's tokens.
+        @param _owner  The address of the token holder
+        @param _id     ID of the token
+        @return        The _owner's balance of the token type requested
+     */</span>
+    <span class="k">function</span> <span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span> <span class="n">_owner</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_id</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="cm">/**
+        @notice Get the balance of multiple account/token pairs
+        @param _owners The addresses of the token holders
+        @param _ids    ID of the tokens
+        @return        The _owner's balance of the token types requested (i.e. balance for each (owner, id) pair)
+     */</span>
+    <span class="k">function</span> <span class="n">balanceOfBatch</span><span class="p">(</span><span class="kt">address</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">_owners</span><span class="p">,</span> <span class="kt">uint256</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">_ids</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">[]</span> <span class="k">memory</span><span class="p">);</span>
+
+    <span class="cm">/**
+        @notice Enable or disable approval for a third party ("operator") to manage all of the caller's tokens.
+        @dev MUST emit the ApprovalForAll event on success.
+        @param _operator  Address to add to the set of authorized operators
+        @param _approved  True if the operator is approved, false to revoke approval
+    */</span>
+    <span class="k">function</span> <span class="n">setApprovalForAll</span><span class="p">(</span><span class="kt">address</span> <span class="n">_operator</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">_approved</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="cm">/**
+        @notice Queries the approval status of an operator for a given owner.
+        @param _owner     The owner of the tokens
+        @param _operator  Address of authorized operator
+        @return           True if the operator is approved, false if not
+    */</span>
+    <span class="k">function</span> <span class="n">isApprovedForAll</span><span class="p">(</span><span class="kt">address</span> <span class="n">_owner</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_operator</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+  
+    <h3 id="erc-1155-token-receiver">
+      
+      
+        <a href="#erc-1155-token-receiver" class="anchor-link"></a> ERC-1155 Token Receiver
+      
+      
+    </h3>
+
+<p><strong>Smart contracts MUST implement all of the functions in the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface to accept transfers. See “Safe Transfer Rules” for further detail.</strong></p>
+
+<p><strong>Smart contracts MUST implement the ERC-165 <code class="language-plaintext highlighter-rouge">supportsInterface</code> function and signify support for the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface to accept transfers. See “ERC1155TokenReceiver ERC-165 rules” for further detail.</strong></p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">9</span><span class="p">;</span>
+
+<span class="cm">/**
+    Note: The ERC-165 identifier for this interface is 0x4e2312e0.
+*/</span>
+<span class="k">interface</span> <span class="n">ERC1155TokenReceiver</span> <span class="p">{</span>
+    <span class="cm">/**
+        @notice Handle the receipt of a single ERC1155 token type.
+        @dev An ERC1155-compliant smart contract MUST call this function on the token recipient contract, at the end of a `safeTransferFrom` after the balance has been updated.        
+        This function MUST return `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))` (i.e. 0xf23a6e61) if it accepts the transfer.
+        This function MUST revert if it rejects the transfer.
+        Return of any other value than the prescribed keccak256 generated value MUST result in the transaction being reverted by the caller.
+        @param _operator  The address which initiated the transfer (i.e. msg.sender)
+        @param _from      The address which previously owned the token
+        @param _id        The ID of the token being transferred
+        @param _value     The amount of tokens being transferred
+        @param _data      Additional data with no specified format
+        @return           `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`
+    */</span>
+    <span class="k">function</span> <span class="n">onERC1155Received</span><span class="p">(</span><span class="kt">address</span> <span class="n">_operator</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_from</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_id</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_value</span><span class="p">,</span> <span class="kt">bytes</span> <span class="k">calldata</span> <span class="n">_data</span><span class="p">)</span> <span class="k">external</span> <span class="k">returns</span><span class="p">(</span><span class="kt">bytes4</span><span class="p">);</span>
+
+    <span class="cm">/**
+        @notice Handle the receipt of multiple ERC1155 token types.
+        @dev An ERC1155-compliant smart contract MUST call this function on the token recipient contract, at the end of a `safeBatchTransferFrom` after the balances have been updated.        
+        This function MUST return `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))` (i.e. 0xbc197c81) if it accepts the transfer(s).
+        This function MUST revert if it rejects the transfer(s).
+        Return of any other value than the prescribed keccak256 generated value MUST result in the transaction being reverted by the caller.
+        @param _operator  The address which initiated the batch transfer (i.e. msg.sender)
+        @param _from      The address which previously owned the token
+        @param _ids       An array containing ids of each token being transferred (order and length must match _values array)
+        @param _values    An array containing amounts of each token being transferred (order and length must match _ids array)
+        @param _data      Additional data with no specified format
+        @return           `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`
+    */</span>
+    <span class="k">function</span> <span class="n">onERC1155BatchReceived</span><span class="p">(</span><span class="kt">address</span> <span class="n">_operator</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_from</span><span class="p">,</span> <span class="kt">uint256</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">_ids</span><span class="p">,</span> <span class="kt">uint256</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">_values</span><span class="p">,</span> <span class="kt">bytes</span> <span class="k">calldata</span> <span class="n">_data</span><span class="p">)</span> <span class="k">external</span> <span class="k">returns</span><span class="p">(</span><span class="kt">bytes4</span><span class="p">);</span>       
+<span class="p">}</span>
+</code></pre></div></div>
+  
+    <h3 id="safe-transfer-rules">
+      
+      
+        <a href="#safe-transfer-rules" class="anchor-link"></a> Safe Transfer Rules
+      
+      
+    </h3>
+
+<p>To be more explicit about how the standard <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> and <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code> functions MUST operate with respect to the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook functions, a list of scenarios and rules follows.</p>
+  
+    <h4 id="scenarios">
+      
+      
+        <a href="#scenarios" class="anchor-link"></a> Scenarios
+      
+      
+    </h4>
+
+<p><strong><em>Scenario#1 :</em></strong> The recipient is not a contract.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">onERC1155Received</code> and <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> MUST NOT be called on an EOA (Externally Owned Account).</li>
+</ul>
+
+<p><strong><em>Scenario#2 :</em></strong> The transaction is not a mint/transfer of a token.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">onERC1155Received</code> and <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> MUST NOT be called outside of a mint or transfer process.</li>
+</ul>
+
+<p><strong><em>Scenario#3 :</em></strong> The receiver does not implement the necessary <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface function(s).</p>
+<ul>
+  <li>The transfer MUST be reverted with the one caveat below.
+    <ul>
+      <li>If the token(s) being sent are part of a hybrid implementation of another standard, that particular standard’s rules on sending to a contract MAY now be followed instead. See “Backwards Compatibility” section.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>Scenario#4 :</em></strong> The receiver implements the necessary <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface function(s) but returns an unknown value.</p>
+<ul>
+  <li>The transfer MUST be reverted.</li>
+</ul>
+
+<p><strong><em>Scenario#5 :</em></strong> The receiver implements the necessary <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface function(s) but throws an error.</p>
+<ul>
+  <li>The transfer MUST be reverted.</li>
+</ul>
+
+<p><strong><em>Scenario#6 :</em></strong> The receiver implements the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface and is the recipient of one and only one balance change (e.g. <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> called).</p>
+<ul>
+  <li>The balances for the transfer MUST have been updated before the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook is called on a recipient contract.</li>
+  <li>The transfer event MUST have been emitted to reflect the balance changes before the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook is called on the recipient contract.</li>
+  <li>One of <code class="language-plaintext highlighter-rouge">onERC1155Received</code> or <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> MUST be called on the recipient contract.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">onERC1155Received</code> hook SHOULD be called on the recipient contract and its rules followed.
+    <ul>
+      <li>See “onERC1155Received rules” for further rules that MUST be followed.</li>
+    </ul>
+  </li>
+  <li>The <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> hook MAY be called on the recipient contract and its rules followed.
+    <ul>
+      <li>See “onERC1155BatchReceived rules” for further rules that MUST be followed.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>Scenario#7 :</em></strong> The receiver implements the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface and is the recipient of more than one balance change (e.g. <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code> called).</p>
+<ul>
+  <li>All balance transfers that are referenced in a call to an <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook MUST be updated before the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook is called on the recipient contract.</li>
+  <li>All transfer events MUST have been emitted to reflect current balance changes before an <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook is called on the recipient contract.</li>
+  <li><code class="language-plaintext highlighter-rouge">onERC1155Received</code> or <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> MUST be called on the recipient as many times as necessary such that every balance change for the recipient in the scenario is accounted for.
+    <ul>
+      <li>The return magic value for every hook call MUST be checked and acted upon as per “onERC1155Received rules” and “onERC1155BatchReceived rules”.</li>
+    </ul>
+  </li>
+  <li>The <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> hook SHOULD be called on the recipient contract and its rules followed.
+    <ul>
+      <li>See “onERC1155BatchReceived rules” for further rules that MUST be followed.</li>
+    </ul>
+  </li>
+  <li>The <code class="language-plaintext highlighter-rouge">onERC1155Received</code> hook MAY be called on the recipient contract and its rules followed.
+    <ul>
+      <li>See “onERC1155Received rules” for further rules that MUST be followed.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>Scenario#8 :</em></strong> You are the creator of a contract that implements the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface and you forward the token(s) onto another address in one or both of <code class="language-plaintext highlighter-rouge">onERC1155Received</code> and <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code>.</p>
+<ul>
+  <li>Forwarding should be considered acceptance and then initiating a new <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> or <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code> in a new context.
+    <ul>
+      <li>The prescribed keccak256 acceptance value magic for the receiver hook being called MUST be returned after forwarding is successful.</li>
+    </ul>
+  </li>
+  <li>The <code class="language-plaintext highlighter-rouge">_data</code> argument MAY be re-purposed for the new context.</li>
+  <li>If forwarding fails the transaction MAY be reverted.
+    <ul>
+      <li>If the contract logic wishes to keep the ownership of the token(s) itself in this case it MAY do so.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>Scenario#9 :</em></strong> You are transferring tokens via a non-standard API call i.e. an implementation specific API and NOT <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> or <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code>.</p>
+<ul>
+  <li>In this scenario all balance updates and events output rules are the same as if a standard transfer function had been called.
+    <ul>
+      <li>i.e. an external viewer MUST still be able to query the balance via a standard function and it MUST be identical to the balance as determined by <code class="language-plaintext highlighter-rouge">TransferSingle</code> and <code class="language-plaintext highlighter-rouge">TransferBatch</code> events alone.</li>
+    </ul>
+  </li>
+  <li>If the receiver is a contract the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hooks still need to be called on it and the return values respected the same as if a standard transfer function had been called.
+    <ul>
+      <li>However while the <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> or <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code> functions MUST revert if a receiving contract does not implement the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface, a non-standard function MAY proceed with the transfer.</li>
+      <li>See “Implementation specific transfer API rules”.</li>
+    </ul>
+  </li>
+</ul>
+  
+    <h4 id="rules">
+      
+      
+        <a href="#rules" class="anchor-link"></a> Rules
+      
+      
+    </h4>
+
+<p><strong><em>safeTransferFrom rules:</em></strong></p>
+<ul>
+  <li>Caller must be approved to manage the tokens being transferred out of the <code class="language-plaintext highlighter-rouge">_from</code> account (see “Approval” section).</li>
+  <li>MUST revert if <code class="language-plaintext highlighter-rouge">_to</code> is the zero address.</li>
+  <li>MUST revert if balance of holder for token <code class="language-plaintext highlighter-rouge">_id</code> is lower than the <code class="language-plaintext highlighter-rouge">_value</code> sent to the recipient.</li>
+  <li>MUST revert on any other error.</li>
+  <li>MUST emit the <code class="language-plaintext highlighter-rouge">TransferSingle</code> event to reflect the balance change (see “TransferSingle and TransferBatch event rules” section).</li>
+  <li>After the above conditions are met, this function MUST check if <code class="language-plaintext highlighter-rouge">_to</code> is a smart contract (e.g. code size &gt; 0). If so, it MUST call <code class="language-plaintext highlighter-rouge">onERC1155Received</code> on <code class="language-plaintext highlighter-rouge">_to</code> and act appropriately (see “onERC1155Received rules” section).
+    <ul>
+      <li>The <code class="language-plaintext highlighter-rouge">_data</code> argument provided by the sender for the transfer MUST be passed with its contents unaltered to the <code class="language-plaintext highlighter-rouge">onERC1155Received</code> hook function via its <code class="language-plaintext highlighter-rouge">_data</code> argument.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>safeBatchTransferFrom rules:</em></strong></p>
+<ul>
+  <li>Caller must be approved to manage all the tokens being transferred out of the <code class="language-plaintext highlighter-rouge">_from</code> account (see “Approval” section).</li>
+  <li>MUST revert if <code class="language-plaintext highlighter-rouge">_to</code> is the zero address.</li>
+  <li>MUST revert if length of <code class="language-plaintext highlighter-rouge">_ids</code> is not the same as length of <code class="language-plaintext highlighter-rouge">_values</code>.</li>
+  <li>MUST revert if any of the balance(s) of the holder(s) for token(s) in <code class="language-plaintext highlighter-rouge">_ids</code> is lower than the respective amount(s) in <code class="language-plaintext highlighter-rouge">_values</code> sent to the recipient.</li>
+  <li>MUST revert on any other error.</li>
+  <li>MUST emit <code class="language-plaintext highlighter-rouge">TransferSingle</code> or <code class="language-plaintext highlighter-rouge">TransferBatch</code> event(s) such that all the balance changes are reflected (see “TransferSingle and TransferBatch event rules” section).</li>
+  <li>The balance changes and events MUST occur in the array order they were submitted (_ids[0]/_values[0] before _ids[1]/_values[1], etc).</li>
+  <li>After the above conditions are met, this function MUST check if <code class="language-plaintext highlighter-rouge">_to</code> is a smart contract (e.g. code size &gt; 0). If so, it MUST call <code class="language-plaintext highlighter-rouge">onERC1155Received</code> or <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> on <code class="language-plaintext highlighter-rouge">_to</code> and act appropriately (see “onERC1155Received and onERC1155BatchReceived rules” section).
+    <ul>
+      <li>The <code class="language-plaintext highlighter-rouge">_data</code> argument provided by the sender for the transfer MUST be passed with its contents unaltered to the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook function(s) via their <code class="language-plaintext highlighter-rouge">_data</code> argument.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>TransferSingle and TransferBatch event rules:</em></strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">TransferSingle</code> SHOULD be used to indicate a single balance transfer has occurred between a <code class="language-plaintext highlighter-rouge">_from</code> and <code class="language-plaintext highlighter-rouge">_to</code> pair.
+    <ul>
+      <li>It MAY be emitted multiple times to indicate multiple balance changes in the transaction, but note that <code class="language-plaintext highlighter-rouge">TransferBatch</code> is designed for this to reduce gas consumption.</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_operator</code> argument MUST be the address of an account/contract that is approved to make the transfer (SHOULD be msg.sender).</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_from</code> argument MUST be the address of the holder whose balance is decreased.</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_to</code> argument MUST be the address of the recipient whose balance is increased.</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_id</code> argument MUST be the token type being transferred.</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_value</code> argument MUST be the number of tokens the holder balance is decreased by and match what the recipient balance is increased by.</li>
+      <li>When minting/creating tokens, the <code class="language-plaintext highlighter-rouge">_from</code> argument MUST be set to <code class="language-plaintext highlighter-rouge">0x0</code> (i.e. zero address). See “Minting/creating and burning/destroying rules”.</li>
+      <li>When burning/destroying tokens, the <code class="language-plaintext highlighter-rouge">_to</code> argument MUST be set to <code class="language-plaintext highlighter-rouge">0x0</code> (i.e. zero address). See “Minting/creating and burning/destroying rules”.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">TransferBatch</code> SHOULD be used to indicate multiple balance transfers have occurred between a <code class="language-plaintext highlighter-rouge">_from</code> and <code class="language-plaintext highlighter-rouge">_to</code> pair.
+    <ul>
+      <li>It MAY be emitted with a single element in the list to indicate a singular balance change in the transaction, but note that <code class="language-plaintext highlighter-rouge">TransferSingle</code> is designed for this to reduce gas consumption.</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_operator</code> argument MUST be the address of an account/contract that is approved to make the transfer (SHOULD be msg.sender).</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_from</code> argument MUST be the address of the holder whose balance is decreased for each entry pair in <code class="language-plaintext highlighter-rouge">_ids</code> and <code class="language-plaintext highlighter-rouge">_values</code>.</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_to</code> argument MUST be the address of the recipient whose balance is increased for each entry pair in <code class="language-plaintext highlighter-rouge">_ids</code> and <code class="language-plaintext highlighter-rouge">_values</code>.</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_ids</code> array argument MUST contain the ids of the tokens being transferred.</li>
+      <li>The <code class="language-plaintext highlighter-rouge">_values</code> array argument MUST contain the number of token to be transferred for each corresponding entry in <code class="language-plaintext highlighter-rouge">_ids</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">_ids</code> and <code class="language-plaintext highlighter-rouge">_values</code> MUST have the same length.</li>
+      <li>When minting/creating tokens, the <code class="language-plaintext highlighter-rouge">_from</code> argument MUST be set to <code class="language-plaintext highlighter-rouge">0x0</code> (i.e. zero address). See “Minting/creating and burning/destroying rules”.</li>
+      <li>When burning/destroying tokens, the <code class="language-plaintext highlighter-rouge">_to</code> argument MUST be set to <code class="language-plaintext highlighter-rouge">0x0</code> (i.e. zero address). See “Minting/creating and burning/destroying rules”.</li>
+    </ul>
+  </li>
+  <li>The total value transferred from address <code class="language-plaintext highlighter-rouge">0x0</code> minus the total value transferred to <code class="language-plaintext highlighter-rouge">0x0</code> observed via the <code class="language-plaintext highlighter-rouge">TransferSingle</code> and <code class="language-plaintext highlighter-rouge">TransferBatch</code> events MAY be used by clients and exchanges to determine the “circulating supply” for a given token ID.</li>
+  <li>To broadcast the existence of a token ID with no initial balance, the contract SHOULD emit the <code class="language-plaintext highlighter-rouge">TransferSingle</code> event from <code class="language-plaintext highlighter-rouge">0x0</code> to <code class="language-plaintext highlighter-rouge">0x0</code>, with the token creator as <code class="language-plaintext highlighter-rouge">_operator</code>, and a <code class="language-plaintext highlighter-rouge">_value</code> of 0.</li>
+  <li>All <code class="language-plaintext highlighter-rouge">TransferSingle</code> and <code class="language-plaintext highlighter-rouge">TransferBatch</code> events MUST be emitted to reflect all the balance changes that have occurred before any call(s) to <code class="language-plaintext highlighter-rouge">onERC1155Received</code> or <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code>.
+    <ul>
+      <li>To make sure event order is correct in the case of valid re-entry (e.g. if a receiver contract forwards tokens on receipt) state balance and events balance MUST match before calling an external contract.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>onERC1155Received rules:</em></strong></p>
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">_operator</code> argument MUST be the address of an account/contract that is approved to make the transfer (SHOULD be msg.sender).</li>
+  <li>The <code class="language-plaintext highlighter-rouge">_from</code> argument MUST be the address of the holder whose balance is decreased.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">_from</code> MUST be 0x0 for a mint.</li>
+    </ul>
+  </li>
+  <li>The <code class="language-plaintext highlighter-rouge">_id</code> argument MUST be the token type being transferred.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">_value</code> argument MUST be the number of tokens the holder balance is decreased by and match what the recipient balance is increased by.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">_data</code> argument MUST contain the information provided by the sender for the transfer with its contents unaltered.
+    <ul>
+      <li>i.e. it MUST pass on the unaltered <code class="language-plaintext highlighter-rouge">_data</code> argument sent via the <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> or <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code> call for this transfer.</li>
+    </ul>
+  </li>
+  <li>The recipient contract MAY accept an increase of its balance by returning the acceptance magic value <code class="language-plaintext highlighter-rouge">bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))</code>
+    <ul>
+      <li>If the return value is <code class="language-plaintext highlighter-rouge">bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))</code> the transfer MUST be completed or MUST revert if any other conditions are not met for success.</li>
+    </ul>
+  </li>
+  <li>The recipient contract MAY reject an increase of its balance by calling revert.
+    <ul>
+      <li>If the recipient contract throws/reverts the transaction MUST be reverted.</li>
+    </ul>
+  </li>
+  <li>If the return value is anything other than <code class="language-plaintext highlighter-rouge">bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))</code> the transaction MUST be reverted.</li>
+  <li><code class="language-plaintext highlighter-rouge">onERC1155Received</code> (and/or <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code>) MAY be called multiple times in a single transaction and the following requirements must be met:
+    <ul>
+      <li>All callbacks represent mutually exclusive balance changes.</li>
+      <li>The set of all calls to <code class="language-plaintext highlighter-rouge">onERC1155Received</code> and <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> describes all balance changes that occurred during the transaction in the order submitted.</li>
+    </ul>
+  </li>
+  <li>A contract MAY skip calling the <code class="language-plaintext highlighter-rouge">onERC1155Received</code> hook function if the transfer operation is transferring the token to itself.</li>
+</ul>
+
+<p><strong><em>onERC1155BatchReceived rules:</em></strong></p>
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">_operator</code> argument MUST be the address of an account/contract that is approved to make the transfer (SHOULD be msg.sender).</li>
+  <li>The <code class="language-plaintext highlighter-rouge">_from</code> argument MUST be the address of the holder whose balance is decreased.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">_from</code> MUST be 0x0 for a mint.</li>
+    </ul>
+  </li>
+  <li>The <code class="language-plaintext highlighter-rouge">_ids</code> argument MUST be the list of tokens being transferred.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">_values</code> argument MUST be the list of number of tokens (matching the list and order of tokens specified in <code class="language-plaintext highlighter-rouge">_ids</code>) the holder balance is decreased by and match what the recipient balance is increased by.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">_data</code> argument MUST contain the information provided by the sender for the transfer with its contents unaltered.
+    <ul>
+      <li>i.e. it MUST pass on the unaltered <code class="language-plaintext highlighter-rouge">_data</code> argument sent via the <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code> call for this transfer.</li>
+    </ul>
+  </li>
+  <li>The recipient contract MAY accept an increase of its balance by returning the acceptance magic value <code class="language-plaintext highlighter-rouge">bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))</code>
+    <ul>
+      <li>If the return value is <code class="language-plaintext highlighter-rouge">bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))</code> the transfer MUST be completed or MUST revert if any other conditions are not met for success.</li>
+    </ul>
+  </li>
+  <li>The recipient contract MAY reject an increase of its balance by calling revert.
+    <ul>
+      <li>If the recipient contract throws/reverts the transaction MUST be reverted.</li>
+    </ul>
+  </li>
+  <li>If the return value is anything other than <code class="language-plaintext highlighter-rouge">bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))</code> the transaction MUST be reverted.</li>
+  <li><code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> (and/or <code class="language-plaintext highlighter-rouge">onERC1155Received</code>) MAY be called multiple times in a single transaction and the following requirements must be met:
+    <ul>
+      <li>All callbacks represent mutually exclusive balance changes.</li>
+      <li>The set of all calls to <code class="language-plaintext highlighter-rouge">onERC1155Received</code> and <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> describes all balance changes that occurred during the transaction in the order submitted.</li>
+    </ul>
+  </li>
+  <li>A contract MAY skip calling the <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> hook function if the transfer operation is transferring the token(s) to itself.</li>
+</ul>
+
+<p><strong><em>ERC1155TokenReceiver ERC-165 rules:</em></strong></p>
+<ul>
+  <li>The implementation of the ERC-165 <code class="language-plaintext highlighter-rouge">supportsInterface</code> function SHOULD be as follows:
+    <div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">function</span> <span class="n">supportsInterface</span><span class="p">(</span><span class="kt">bytes4</span> <span class="n">interfaceID</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span>  <span class="n">interfaceID</span> <span class="o">==</span> <span class="mh">0x01ffc9a7</span> <span class="o">||</span>    <span class="c1">// ERC-165 support (i.e. `bytes4(keccak256('supportsInterface(bytes4)'))`).
+</span>              <span class="n">interfaceID</span> <span class="o">==</span> <span class="mh">0x4e2312e0</span><span class="p">;</span>      <span class="c1">// ERC-1155 `ERC1155TokenReceiver` support (i.e. `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)")) ^ bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`).
+</span>  <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>The implementation MAY differ from the above but:
+    <ul>
+      <li>It MUST return the constant value <code class="language-plaintext highlighter-rouge">true</code> if <code class="language-plaintext highlighter-rouge">0x01ffc9a7</code> is passed through the <code class="language-plaintext highlighter-rouge">interfaceID</code> argument. This signifies ERC-165 support.</li>
+      <li>It MUST return the constant value <code class="language-plaintext highlighter-rouge">true</code> if <code class="language-plaintext highlighter-rouge">0x4e2312e0</code> is passed through the <code class="language-plaintext highlighter-rouge">interfaceID</code> argument. This signifies ERC-1155 <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> support.</li>
+      <li>It MUST NOT consume more than 10,000 gas.
+        <ul>
+          <li>This keeps it below the ERC-165 requirement of 30,000 gas, reduces the gas reserve needs and minimises possible side-effects of gas exhaustion during the call.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>Implementation specific transfer API rules:</em></strong></p>
+<ul>
+  <li>If an implementation specific API function is used to transfer ERC-1155 token(s) to a contract, the <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> or <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code> (as appropriate) rules MUST still be followed if the receiver implements the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface. If it does not the non-standard implementation SHOULD revert but MAY proceed.</li>
+  <li>An example:
+    <ol>
+      <li>An approved user calls a function such as <code class="language-plaintext highlighter-rouge">function myTransferFrom(address _from, address _to, uint256[] calldata _ids, uint256[] calldata _values);</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">myTransferFrom</code> updates the balances for <code class="language-plaintext highlighter-rouge">_from</code> and <code class="language-plaintext highlighter-rouge">_to</code> addresses for all <code class="language-plaintext highlighter-rouge">_ids</code> and <code class="language-plaintext highlighter-rouge">_values</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">myTransferFrom</code> emits <code class="language-plaintext highlighter-rouge">TransferBatch</code> with the details of what was transferred from address <code class="language-plaintext highlighter-rouge">_from</code> to address <code class="language-plaintext highlighter-rouge">_to</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">myTransferFrom</code> checks if <code class="language-plaintext highlighter-rouge">_to</code> is a contract address and determines that it is so (if not, then the transfer can be considered successful).</li>
+      <li><code class="language-plaintext highlighter-rouge">myTransferFrom</code> calls <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> on <code class="language-plaintext highlighter-rouge">_to</code> and it reverts or returns an unknown value (if it had returned <code class="language-plaintext highlighter-rouge">bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))</code> the transfer can be considered successful).</li>
+      <li>At this point <code class="language-plaintext highlighter-rouge">myTransferFrom</code> SHOULD revert the transaction immediately as receipt of the token(s) was not explicitly accepted by the <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> function.</li>
+      <li>If however <code class="language-plaintext highlighter-rouge">myTransferFrom</code> wishes to continue it MUST call <code class="language-plaintext highlighter-rouge">supportsInterface(0x4e2312e0)</code> on <code class="language-plaintext highlighter-rouge">_to</code> and if it returns the constant value <code class="language-plaintext highlighter-rouge">true</code> the transaction MUST be reverted, as it is now known to be a valid receiver and the previous acceptance step failed.
+        <ul>
+          <li>NOTE: You could have called <code class="language-plaintext highlighter-rouge">supportsInterface(0x4e2312e0)</code> at a previous step if you wanted to gather and act upon that information earlier, such as in a hybrid standards scenario.</li>
+        </ul>
+      </li>
+      <li>If the above call to <code class="language-plaintext highlighter-rouge">supportsInterface(0x4e2312e0)</code> on <code class="language-plaintext highlighter-rouge">_to</code> reverts or returns a value other than the constant value <code class="language-plaintext highlighter-rouge">true</code> the <code class="language-plaintext highlighter-rouge">myTransferFrom</code> function MAY consider this transfer successful.
+        <ul>
+          <li><strong>NOTE</strong>: this MAY result in unrecoverable tokens if sent to an address that does not expect to receive ERC-1155 tokens.</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+  <li>The above example is not exhaustive but illustrates the major points (and shows that most are shared with <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> and <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code>):
+    <ul>
+      <li>Balances that are updated MUST have equivalent transfer events emitted.</li>
+      <li>A receiver address has to be checked if it is a contract and if so relevant <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook function(s) have to be called on it.</li>
+      <li>Balances (and events associated) that are referenced in a call to an <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook MUST be updated (and emitted) before the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook is called.</li>
+      <li>The return values of the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook functions that are called MUST be respected if they are implemented.</li>
+      <li>Only non-standard transfer functions MAY allow tokens to be sent to a recipient contract that does NOT implement the necessary <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook functions. <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> and <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code> MUST revert in that case (unless it is a hybrid standards implementation see “Backwards Compatibility”).</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>Minting/creating and burning/destroying rules:</em></strong></p>
+<ul>
+  <li>A mint/create operation is essentially a specialized transfer and MUST follow these rules:
+    <ul>
+      <li>To broadcast the existence of a token ID with no initial balance, the contract SHOULD emit the <code class="language-plaintext highlighter-rouge">TransferSingle</code> event from <code class="language-plaintext highlighter-rouge">0x0</code> to <code class="language-plaintext highlighter-rouge">0x0</code>, with the token creator as <code class="language-plaintext highlighter-rouge">_operator</code>, and a <code class="language-plaintext highlighter-rouge">_value</code> of 0.</li>
+      <li>The “TransferSingle and TransferBatch event rules” MUST be followed as appropriate for the mint(s) (i.e. singles or batches) however the <code class="language-plaintext highlighter-rouge">_from</code> argument MUST be set to <code class="language-plaintext highlighter-rouge">0x0</code> (i.e. zero address) to flag the transfer as a mint to contract observers.
+        <ul>
+          <li><strong>NOTE:</strong> This includes tokens that are given an initial balance in the contract. The balance of the contract MUST also be able to be determined by events alone meaning initial contract balances (for eg. in construction) MUST emit events to reflect those balances too.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>A burn/destroy operation is essentially a specialized transfer and MUST follow these rules:
+    <ul>
+      <li>The “TransferSingle and TransferBatch event rules” MUST be followed as appropriate for the burn(s) (i.e. singles or batches) however the <code class="language-plaintext highlighter-rouge">_to</code> argument MUST be set to <code class="language-plaintext highlighter-rouge">0x0</code> (i.e. zero address) to flag the transfer as a burn to contract observers.</li>
+      <li>When burning/destroying you do not have to actually transfer to <code class="language-plaintext highlighter-rouge">0x0</code> (that is impl specific), only the <code class="language-plaintext highlighter-rouge">_to</code> argument in the event MUST be set to <code class="language-plaintext highlighter-rouge">0x0</code> as above.</li>
+    </ul>
+  </li>
+  <li>The total value transferred from address <code class="language-plaintext highlighter-rouge">0x0</code> minus the total value transferred to <code class="language-plaintext highlighter-rouge">0x0</code> observed via the <code class="language-plaintext highlighter-rouge">TransferSingle</code> and <code class="language-plaintext highlighter-rouge">TransferBatch</code> events MAY be used by clients and exchanges to determine the “circulating supply” for a given token ID.</li>
+  <li>As mentioned above mint/create and burn/destroy operations are specialized transfers and so will likely be accomplished with custom transfer functions rather than <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> or <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code>. If so the “Implementation specific transfer API rules” section would be appropriate.
+    <ul>
+      <li>Even in a non-safe API and/or hybrid standards case the above event rules MUST still be adhered to when minting/creating or burning/destroying.</li>
+    </ul>
+  </li>
+  <li>A contract MAY skip calling the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> hook function(s) if the mint operation is transferring the token(s) to itself. In all other cases the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> rules MUST be followed as appropriate for the implementation (i.e. safe, custom and/or hybrid).</li>
+</ul>
+  
+    <h5 id="a-solidity-example-of-the-keccak256-generated-constants-for-the-various-magic-values-these-may-be-used-by-implementation">
+      
+      
+        <a href="#a-solidity-example-of-the-keccak256-generated-constants-for-the-various-magic-values-these-may-be-used-by-implementation" class="anchor-link"></a> A solidity example of the keccak256 generated constants for the various magic values (these MAY be used by implementation):
+      
+      
+    </h5>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bytes4</span> <span class="k">constant</span> <span class="k">public</span> <span class="n">ERC1155_ERC165</span> <span class="o">=</span> <span class="mh">0xd9b67a26</span><span class="p">;</span> <span class="c1">// ERC-165 identifier for the main token standard.
+</span><span class="kt">bytes4</span> <span class="k">constant</span> <span class="k">public</span> <span class="n">ERC1155_ERC165_TOKENRECEIVER</span> <span class="o">=</span> <span class="mh">0x4e2312e0</span><span class="p">;</span> <span class="c1">// ERC-165 identifier for the `ERC1155TokenReceiver` support (i.e. `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)")) ^ bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`).
+</span><span class="kt">bytes4</span> <span class="k">constant</span> <span class="k">public</span> <span class="n">ERC1155_ACCEPTED</span> <span class="o">=</span> <span class="mh">0xf23a6e61</span><span class="p">;</span> <span class="c1">// Return value from `onERC1155Received` call if a contract accepts receipt (i.e `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`).
+</span><span class="kt">bytes4</span> <span class="k">constant</span> <span class="k">public</span> <span class="n">ERC1155_BATCH_ACCEPTED</span> <span class="o">=</span> <span class="mh">0xbc197c81</span><span class="p">;</span> <span class="c1">// Return value from `onERC1155BatchReceived` call if a contract accepts receipt (i.e `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`).
+</span></code></pre></div></div>
+  
+    <h3 id="metadata">
+      
+      
+        <a href="#metadata" class="anchor-link"></a> Metadata
+      
+      
+    </h3>
+
+<p>The URI value allows for ID substitution by clients. If the string <code class="language-plaintext highlighter-rouge">{id}</code> exists in any URI, clients MUST replace this with the actual token ID in hexadecimal form. This allows for a large number of tokens to use the same on-chain string by defining a URI once, for that large number of tokens.</p>
+
+<ul>
+  <li>The string format of the substituted hexadecimal ID MUST be lowercase alphanumeric: <code class="language-plaintext highlighter-rouge">[0-9a-f]</code> with no 0x prefix.</li>
+  <li>The string format of the substituted hexadecimal ID MUST be leading zero padded to 64 hex characters length if necessary.</li>
+</ul>
+
+<p>Example of such a URI: <code class="language-plaintext highlighter-rouge">https://token-cdn-domain/{id}.json</code> would be replaced with <code class="language-plaintext highlighter-rouge">https://token-cdn-domain/000000000000000000000000000000000000000000000000000000000004cce0.json</code> if the client is referring to token ID 314592/0x4CCE0.</p>
+  
+    <h4 id="metadata-extensions">
+      
+      
+        <a href="#metadata-extensions" class="anchor-link"></a> Metadata Extensions
+      
+      
+    </h4>
+
+<p>The optional <code class="language-plaintext highlighter-rouge">ERC1155Metadata_URI</code> extension can be identified with the <a href="/EIPS/eip-165">ERC-165 Standard Interface Detection</a>.</p>
+
+<p>If the optional <code class="language-plaintext highlighter-rouge">ERC1155Metadata_URI</code> extension is included:</p>
+<ul>
+  <li>The ERC-165 <code class="language-plaintext highlighter-rouge">supportsInterface</code> function MUST return the constant value <code class="language-plaintext highlighter-rouge">true</code> if <code class="language-plaintext highlighter-rouge">0x0e89341c</code> is passed through the <code class="language-plaintext highlighter-rouge">interfaceID</code> argument.</li>
+  <li><em>Changes</em> to the URI MUST emit the <code class="language-plaintext highlighter-rouge">URI</code> event if the change can be expressed with an event (i.e. it isn’t dynamic/programmatic).
+    <ul>
+      <li>An implementation MAY emit the <code class="language-plaintext highlighter-rouge">URI</code> event during a mint operation but it is NOT mandatory. An observer MAY fetch the metadata uri at mint time from the <code class="language-plaintext highlighter-rouge">uri</code> function if it was not emitted.</li>
+    </ul>
+  </li>
+  <li>The <code class="language-plaintext highlighter-rouge">uri</code> function SHOULD be used to retrieve values if no event was emitted.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">uri</code> function MUST return the same value as the latest event for an <code class="language-plaintext highlighter-rouge">_id</code> if it was emitted.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">uri</code> function MUST NOT be used to check for the existence of a token as it is possible for an implementation to return a valid string even if the token does not exist.</li>
+</ul>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">9</span><span class="p">;</span>
+
+<span class="cm">/**
+    Note: The ERC-165 identifier for this interface is 0x0e89341c.
+*/</span>
+<span class="k">interface</span> <span class="n">ERC1155Metadata_URI</span> <span class="p">{</span>
+    <span class="cm">/**
+        @notice A distinct Uniform Resource Identifier (URI) for a given token.
+        @dev URIs are defined in RFC 3986.
+        The URI MUST point to a JSON file that conforms to the "ERC-1155 Metadata URI JSON Schema".        
+        @return URI string
+    */</span>
+    <span class="k">function</span> <span class="n">uri</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_id</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">string</span> <span class="k">memory</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+  
+    <h4 id="erc-1155-metadata-uri-json-schema">
+      
+      
+        <a href="#erc-1155-metadata-uri-json-schema" class="anchor-link"></a> ERC-1155 Metadata URI JSON Schema
+      
+      
+    </h4>
+
+<p>This JSON schema is loosely based on the “ERC721 Metadata JSON Schema”, but includes optional formatting to allow for ID substitution by clients. If the string <code class="language-plaintext highlighter-rouge">{id}</code> exists in any JSON value, it MUST be replaced with the actual token ID, by all client software that follows this standard.</p>
+
+<ul>
+  <li>The string format of the substituted hexadecimal ID MUST be lowercase alphanumeric: <code class="language-plaintext highlighter-rouge">[0-9a-f]</code> with no 0x prefix.</li>
+  <li>The string format of the substituted hexadecimal ID MUST be leading zero padded to 64 hex characters length if necessary.</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Token Metadata"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifies the asset to which this token represents"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"decimals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The number of decimal places that the token amount should display - e.g. 18, means to divide the token amount by 1000000000000000000 to get its user representation."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Describes the asset to which this token represents"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A URI pointing to a resource with mime type image/* representing the asset to which this token represents. Consider making any images at a width between 320 and 1080 pixels and aspect ratio between 1.91:1 and 4:5 inclusive."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Arbitrary properties. Values may be strings, numbers, object or arrays."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>An example of an ERC-1155 Metadata JSON file follows. The properties array proposes some SUGGESTED formatting for token-specific display properties and metadata.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Asset Name"</span><span class="p">,</span><span class="w">
+	</span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lorem ipsum..."</span><span class="p">,</span><span class="w">
+	</span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https:</span><span class="se">\/\/</span><span class="s2">s3.amazonaws.com</span><span class="se">\/</span><span class="s2">your-bucket</span><span class="se">\/</span><span class="s2">images</span><span class="se">\/</span><span class="s2">{id}.png"</span><span class="p">,</span><span class="w">
+	</span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nl">"simple_property"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example value"</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"rich_property"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+			</span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w">
+			</span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+			</span><span class="nl">"display_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Example Value"</span><span class="p">,</span><span class="w">
+			</span><span class="nl">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"emphasis"</span><span class="p">,</span><span class="w">
+			</span><span class="nl">"css"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+				</span><span class="nl">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#ffffff"</span><span class="p">,</span><span class="w">
+				</span><span class="nl">"font-weight"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bold"</span><span class="p">,</span><span class="w">
+				</span><span class="nl">"text-decoration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"underline"</span><span class="w">
+			</span><span class="p">}</span><span class="w">
+		</span><span class="p">},</span><span class="w">
+		</span><span class="nl">"array_property"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+			</span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w">
+			</span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span><span class="w">
+			</span><span class="nl">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"emphasis"</span><span class="w">
+		</span><span class="p">}</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+  
+    <h5 id="localization">
+      
+      
+        <a href="#localization" class="anchor-link"></a> Localization
+      
+      
+    </h5>
+
+<p>Metadata localization should be standardized to increase presentation uniformity across all languages. As such, a simple overlay method is proposed to enable localization. If the metadata JSON file contains a <code class="language-plaintext highlighter-rouge">localization</code> attribute, its content MAY be used to provide localized values for fields that need it. The <code class="language-plaintext highlighter-rouge">localization</code> attribute should be a sub-object with three attributes: <code class="language-plaintext highlighter-rouge">uri</code>, <code class="language-plaintext highlighter-rouge">default</code> and <code class="language-plaintext highlighter-rouge">locales</code>. If the string <code class="language-plaintext highlighter-rouge">{locale}</code> exists in any URI, it MUST be replaced with the chosen locale by all client software.</p>
+  
+    <h5 id="json-schema">
+      
+      
+        <a href="#json-schema" class="anchor-link"></a> JSON Schema
+      
+      
+    </h5>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Token Metadata"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifies the asset to which this token represents"</span><span class="p">,</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"decimals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The number of decimal places that the token amount should display - e.g. 18, means to divide the token amount by 1000000000000000000 to get its user representation."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Describes the asset to which this token represents"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A URI pointing to a resource with mime type image/* representing the asset to which this token represents. Consider making any images at a width between 320 and 1080 pixels and aspect ratio between 1.91:1 and 4:5 inclusive."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Arbitrary properties. Values may be strings, numbers, object or arrays."</span><span class="p">,</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"localization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"uri"</span><span class="p">,</span><span class="w"> </span><span class="s2">"default"</span><span class="p">,</span><span class="w"> </span><span class="s2">"locales"</span><span class="p">],</span><span class="w">
+            </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"uri"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The URI pattern to fetch localized data from. This URI should contain the substring `{locale}` which will be replaced with the appropriate locale value before sending the request."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"default"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The locale of the default data within the base JSON"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"locales"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The list of locales for which data is available. These locales should conform to those defined in the Unicode Common Locale Data Repository (http://cldr.unicode.org/)."</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+  
+    <h5 id="localized-sample">
+      
+      
+        <a href="#localized-sample" class="anchor-link"></a> Localized Sample
+      
+      
+    </h5>
+
+<p>Base URI:</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Advertising Space"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Each token represents a unique Ad space in the city."</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"localization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ipfs://QmWS1VAdMD353A6SDk9wNyvkT14kyCiZrNDYAad4w1tKqT/{locale}.json"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"locales"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"en"</span><span class="p">,</span><span class="w"> </span><span class="s2">"es"</span><span class="p">,</span><span class="w"> </span><span class="s2">"fr"</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>es.json:</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Espacio Publicitario"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cada token representa un espacio publicitario único en la ciudad."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>fr.json:</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Espace Publicitaire"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chaque jeton représente un espace publicitaire unique dans la ville."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+  
+    <h3 id="approval">
+      
+      
+        <a href="#approval" class="anchor-link"></a> Approval
+      
+      
+    </h3>
+
+<p>The function <code class="language-plaintext highlighter-rouge">setApprovalForAll</code> allows an operator to manage one’s entire set of tokens on behalf of the approver. To permit approval of a subset of token IDs, an interface such as <a href="/EIPS/eip-1761">ERC-1761 Scoped Approval Interface</a> is suggested.
+The counterpart <code class="language-plaintext highlighter-rouge">isApprovedForAll</code> provides introspection into any status set by <code class="language-plaintext highlighter-rouge">setApprovalForAll</code>.</p>
+
+<p>An owner SHOULD be assumed to always be able to operate on their own tokens regardless of approval status, so should SHOULD NOT have to call <code class="language-plaintext highlighter-rouge">setApprovalForAll</code> to approve themselves as an operator before they can operate on them.</p>
+  
+    <h2 id="rationale">
+      
+      
+        <a href="#rationale" class="anchor-link"></a> Rationale
+      
+      
+    </h2>
+  
+    <h3 id="metadata-choices">
+      
+      
+        <a href="#metadata-choices" class="anchor-link"></a> Metadata Choices
+      
+      
+    </h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">symbol</code> function (found in the ERC-20 and ERC-721 standards) was not included as we do not believe this is a globally useful piece of data to identify a generic virtual item / asset and are also prone to collisions. Short-hand symbols are used in tickers and currency trading, but they aren’t as useful outside of that space.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">name</code> function (for human-readable asset names, on-chain) was removed from the standard to allow the Metadata JSON to be the definitive asset name and reduce duplication of data. This also allows localization for names, which would otherwise be prohibitively expensive if each language string was stored on-chain, not to mention bloating the standard interface. While this decision may add a small burden on implementers to host a JSON file containing metadata, we believe any serious implementation of ERC-1155 will already utilize JSON Metadata.</p>
+  
+    <h3 id="upgrades">
+      
+      
+        <a href="#upgrades" class="anchor-link"></a> Upgrades
+      
+      
+    </h3>
+
+<p>The requirement to emit <code class="language-plaintext highlighter-rouge">TransferSingle</code> or <code class="language-plaintext highlighter-rouge">TransferBatch</code> on balance change implies that a valid implementation of ERC-1155 redeploying to a new contract address MUST emit events from the new contract address to replicate the deprecated contract final state. It is valid to only emit a minimal number of events to reflect only the final balance and omit all the transactions that led to that state. The event emit requirement is to ensure that the current state of the contract can always be traced only through events. To alleviate the need to emit events when changing contract address, consider using the proxy pattern, such as described in <a href="/EIPS/eip-2535">EIP-2535</a>. This will also have the added benefit of providing a stable contract address for users.</p>
+  
+    <h3 id="design-decision-supporting-non-batch">
+      
+      
+        <a href="#design-decision-supporting-non-batch" class="anchor-link"></a> Design decision: Supporting non-batch
+      
+      
+    </h3>
+
+<p>The standard supports <code class="language-plaintext highlighter-rouge">safeTransferFrom</code> and <code class="language-plaintext highlighter-rouge">onERC1155Received</code> functions because they are significantly cheaper for single token-type transfers, which is arguably a common use case.</p>
+  
+    <h3 id="design-decision-safe-transfers-only">
+      
+      
+        <a href="#design-decision-safe-transfers-only" class="anchor-link"></a> Design decision: Safe transfers only
+      
+      
+    </h3>
+
+<p>The standard only supports safe-style transfers, making it possible for receiver contracts to depend on <code class="language-plaintext highlighter-rouge">onERC1155Received</code> or <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> function to be always called at the end of a transfer.</p>
+  
+    <h3 id="guaranteed-log-trace">
+      
+      
+        <a href="#guaranteed-log-trace" class="anchor-link"></a> Guaranteed log trace
+      
+      
+    </h3>
+
+<p>As the Ethereum ecosystem continues to grow, many dapps are relying on traditional databases and explorer API services to retrieve and categorize data. The ERC-1155 standard guarantees that event logs emitted by the smart contract will provide enough data to create an accurate record of all current token balances. A database or explorer may listen to events and be able to provide indexed and categorized searches of every ERC-1155 token in the contract.</p>
+  
+    <h3 id="approval-1">
+      
+      
+        <a href="#approval-1" class="anchor-link"></a> Approval
+      
+      
+    </h3>
+
+<p>The function <code class="language-plaintext highlighter-rouge">setApprovalForAll</code> allows an operator to manage one’s entire set of tokens on behalf of the approver. It enables frictionless interaction with exchange and trade contracts.</p>
+
+<p>Restricting approval to a certain set of token IDs, quantities or other rules MAY be done with an additional interface or an external contract. The rationale is to keep the ERC-1155 standard as generic as possible for all use-cases without imposing a specific approval scheme on implementations that may not need it. Standard token approval interfaces can be used, such as the suggested <a href="/EIPS/eip-1761">ERC-1761 Scoped Approval Interface</a> which is compatible with ERC-1155.</p>
+  
+    <h2 id="backwards-compatibility">
+      
+      
+        <a href="#backwards-compatibility" class="anchor-link"></a> Backwards Compatibility
+      
+      
+    </h2>
+
+<p>There have been requirements during the design discussions to have this standard be compatible with existing standards when sending to contract addresses, specifically ERC-721 at time of writing.
+To cater for this scenario, there is some leeway with the revert logic should a contract not implement the <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> as per “Safe Transfer Rules” section above, specifically “Scenario#3 : The receiver does not implement the necessary <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> interface function(s)”.</p>
+
+<p>Hence in a hybrid ERC-1155 contract implementation an extra call MUST be made on the recipient contract and checked before any hook calls to <code class="language-plaintext highlighter-rouge">onERC1155Received</code> or <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> are made.
+Order of operation MUST therefore be:</p>
+<ol>
+  <li>The implementation MUST call the function <code class="language-plaintext highlighter-rouge">supportsInterface(0x4e2312e0)</code> on the recipient contract, providing at least 10,000 gas.</li>
+  <li>If the function call succeeds and the return value is the constant value <code class="language-plaintext highlighter-rouge">true</code> the implementation proceeds as a regular ERC-1155 implementation, with the call(s) to the <code class="language-plaintext highlighter-rouge">onERC1155Received</code> or <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code> hooks and rules associated.</li>
+  <li>If the function call fails or the return value is NOT the constant value <code class="language-plaintext highlighter-rouge">true</code> the implementation can assume the recipient contract is not an <code class="language-plaintext highlighter-rouge">ERC1155TokenReceiver</code> and follow its other standard’s rules for transfers.</li>
+</ol>
+
+<p><em><strong>Note that a pure implementation of a single standard is recommended</strong></em> rather than a hybrid solution, but an example of a hybrid ERC-1155/ERC-721 contract is linked in the references section under implementations.</p>
+
+<p>An important consideration is that even if the tokens are sent with another standard’s rules the <em><strong>ERC-1155 transfer events MUST still be emitted.</strong></em> This is so the balances can still be determined via events alone as per ERC-1155 standard rules.</p>
+  
+    <h2 id="usage">
+      
+      
+        <a href="#usage" class="anchor-link"></a> Usage
+      
+      
+    </h2>
+
+<p>This standard can be used to represent multiple token types for an entire domain. Both fungible and non-fungible tokens can be stored in the same smart-contract.</p>
+  
+    <h3 id="batch-transfers">
+      
+      
+        <a href="#batch-transfers" class="anchor-link"></a> Batch Transfers
+      
+      
+    </h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">safeBatchTransferFrom</code> function allows for batch transfers of multiple token IDs and values. The design of ERC-1155 makes batch transfers possible without the need for a wrapper contract, as with existing token standards. This reduces gas costs when more than one token type is included in a batch transfer, as compared to single transfers with multiple transactions.</p>
+
+<p>Another advantage of standardized batch transfers is the ability for a smart contract to respond to the batch transfer in a single operation using <code class="language-plaintext highlighter-rouge">onERC1155BatchReceived</code>.</p>
+
+<p>It is RECOMMENDED that clients and wallets sort the token IDs and associated values (in ascending order) when posting a batch transfer, as some ERC-1155 implementations offer significant gas cost savings when IDs are sorted. See <a href="https://github.com/horizon-games/multi-token-standard">Horizon Games - Multi-Token Standard</a> “packed balance” implementation for an example of this.</p>
+  
+    <h3 id="batch-balance">
+      
+      
+        <a href="#batch-balance" class="anchor-link"></a> Batch Balance
+      
+      
+    </h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">balanceOfBatch</code> function allows clients to retrieve balances of multiple owners and token IDs with a single call.</p>
+  
+    <h3 id="enumerating-from-events">
+      
+      
+        <a href="#enumerating-from-events" class="anchor-link"></a> Enumerating from events
+      
+      
+    </h3>
+
+<p>In order to keep storage requirements light for contracts implementing ERC-1155, enumeration (discovering the IDs and values of tokens) must be done using event logs. It is RECOMMENDED that clients such as exchanges and blockchain explorers maintain a local database containing the token ID, Supply, and URI at the minimum. This can be built from each TransferSingle, TransferBatch, and URI event, starting from the block the smart contract was deployed until the latest block.</p>
+
+<p>ERC-1155 contracts must therefore carefully emit <code class="language-plaintext highlighter-rouge">TransferSingle</code> or <code class="language-plaintext highlighter-rouge">TransferBatch</code> events in any instance where tokens are created, minted, transferred or destroyed.</p>
+  
+    <h3 id="non-fungible-tokens">
+      
+      
+        <a href="#non-fungible-tokens" class="anchor-link"></a> Non-Fungible Tokens
+      
+      
+    </h3>
+
+<p>The following strategies are examples of how you MAY mix fungible and non-fungible tokens together in the same contract. The standard does NOT mandate how an implementation must do this.</p>
+  
+    <h5 id="split-id-bits">
+      
+      
+        <a href="#split-id-bits" class="anchor-link"></a> Split ID bits
+      
+      
+    </h5>
+
+<p>The top 128 bits of the uint256 <code class="language-plaintext highlighter-rouge">_id</code> parameter in any ERC-1155 function MAY represent the base token ID, while the bottom 128 bits MAY represent the index of the non-fungible to make it unique.</p>
+
+<p>Non-fungible tokens can be interacted with using an index based accessor into the contract/token data set. Therefore to access a particular token set within a mixed data contract and a particular non-fungible within that set, <code class="language-plaintext highlighter-rouge">_id</code> could be passed as <code class="language-plaintext highlighter-rouge">&lt;uint128: base token id&gt;&lt;uint128: index of non-fungible&gt;</code>.</p>
+
+<p>To identify a non-fungible set/category as a whole (or a fungible) you COULD just pass in the base id via the <code class="language-plaintext highlighter-rouge">_id</code> argument as <code class="language-plaintext highlighter-rouge">&lt;uint128: base token id&gt;&lt;uint128: zero&gt;</code>. If your implementation uses this technique this naturally means the index of a non-fungible SHOULD be 1-based.</p>
+
+<p>Inside the contract code the two pieces of data needed to access the individual non-fungible can be extracted with uint128(~0) and the same mask shifted by 128.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint256</span> <span class="n">baseTokenNFT</span> <span class="o">=</span> <span class="mi">12345</span> <span class="o">&lt;&lt;</span> <span class="mi">128</span><span class="p">;</span>
+<span class="kt">uint128</span> <span class="n">indexNFT</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+
+<span class="kt">uint256</span> <span class="n">baseTokenFT</span> <span class="o">=</span> <span class="mi">54321</span> <span class="o">&lt;&lt;</span> <span class="mi">128</span><span class="p">;</span>
+
+<span class="n">balanceOf</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">baseTokenNFT</span><span class="p">);</span> <span class="c1">// Get balance of the base token for non-fungible set 12345 (this MAY be used to get balance of the user for all of this token set if the implementation wishes as a convenience).
+</span><span class="n">balanceOf</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">baseTokenNFT</span> <span class="o">+</span> <span class="n">indexNFT</span><span class="p">);</span> <span class="c1">// Get balance of the token at index 50 for non-fungible set 12345 (should be 1 if user owns the individual non-fungible token or 0 if they do not).
+</span><span class="n">balanceOf</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">baseTokenFT</span><span class="p">);</span> <span class="c1">// Get balance of the fungible base token 54321.
+</span></code></pre></div></div>
+
+<p>Note that 128 is an arbitrary number, an implementation MAY choose how they would like this split to occur as suitable for their use case. An observer of the contract would simply see events showing balance transfers and mints happening and MAY track the balances using that information alone.
+For an observer to be able to determine type (non-fungible or fungible) from an ID alone they would have to know the split ID bits format on a implementation by implementation basis.</p>
+
+<p>The <a href="https://github.com/enjin/erc-1155">ERC-1155 Reference Implementation</a> is an example of the split ID bits strategy.</p>
+  
+    <h5 id="natural-non-fungible-tokens">
+      
+      
+        <a href="#natural-non-fungible-tokens" class="anchor-link"></a> Natural Non-Fungible tokens
+      
+      
+    </h5>
+
+<p>Another simple way to represent non-fungibles is to allow a maximum value of 1 for each non-fungible token. This would naturally mirror the real world, where unique items have a quantity of 1 and fungible items have a quantity greater than 1.</p>
+  
+    <h2 id="references">
+      
+      
+        <a href="#references" class="anchor-link"></a> References
+      
+      
+    </h2>
+
+<p><strong>Standards</strong></p>
+<ul>
+  <li><a href="/EIPS/eip-721">ERC-721 Non-Fungible Token Standard</a></li>
+  <li><a href="/EIPS/eip-165">ERC-165 Standard Interface Detection</a></li>
+  <li><a href="/EIPS/eip-1538">ERC-1538 Transparent Contract Standard</a></li>
+  <li><a href="https://json-schema.org/">JSON Schema</a></li>
+  <li><a href="https://www.ietf.org/rfc/rfc2119.txt">RFC 2119 Key words for use in RFCs to Indicate Requirement Levels</a></li>
+</ul>
+
+<p><strong>Implementations</strong></p>
+<ul>
+  <li><a href="https://github.com/enjin/erc-1155">ERC-1155 Reference Implementation</a></li>
+  <li><a href="https://github.com/horizon-games/multi-token-standard">Horizon Games - Multi-Token Standard</a></li>
+  <li><a href="https://enjincoin.io">Enjin Coin</a> (<a href="https://github.com/enjin">GitHub</a>)</li>
+  <li><a href="https://github.com/pixowl/thesandbox-contracts/tree/master/src/Asset">The Sandbox - Dual ERC-1155/721 Contract</a></li>
+</ul>
+
+<p><strong>Articles &amp; Discussions</strong></p>
+<ul>
+  <li><a href="https://github.com/ethereum/EIPs/issues/1155">GitHub - Original Discussion Thread</a></li>
+  <li><a href="https://blog.enjincoin.io/erc-1155-the-crypto-item-standard-ac9cf1c5a226">ERC-1155 - The Crypto Item Standard</a></li>
+  <li><a href="https://medium.com/horizongames/going-beyond-erc20-and-erc721-9acebd4ff6ef">Here Be Dragons - Going Beyond ERC-20 and ERC-721 To Reduce Gas Cost by ~80%</a></li>
+  <li><a href="https://blockonomi.com/erc1155-gaming-token/">Blockonomi - Ethereum ERC-1155 Token Perfect for Online Games, Possibly More</a></li>
+  <li><a href="https://blockgeeks.com/erc-1155-token/">Beyond Gaming - Exploring the Utility of ERC-1155 Token Standard!</a></li>
+  <li><a href="https://medium.com/sandbox-game/erc-1155-a-new-standard-for-the-sandbox-c95ee1e45072">ERC-1155: A new standard for The Sandbox</a></li>
+</ul>
+  
+    <h2 id="copyright">
+      
+      
+        <a href="#copyright" class="anchor-link"></a> Copyright
+      
+      
+    </h2>
+<p>Copyright and related rights waived via <a href="/LICENSE">CC0</a>.</p>
+
+  <h2>Citation</h2>
+  <p>Please cite this document as:</p>
+  
+  <p>Witek Radomski&nbsp;&lt;<a href="mailto:witek@enjin.io">witek@enjin.io</a>&gt;, Andrew Cooke&nbsp;&lt;<a href="mailto:ac0dem0nk3y@gmail.com">ac0dem0nk3y@gmail.com</a>&gt;, Philippe Castonguay (@phabc)&nbsp;&lt;<a href="mailto:pc@horizongames.net">pc@horizongames.net</a>&gt;, James Therien&nbsp;&lt;<a href="mailto:james@turing-complete.com">james@turing-complete.com</a>&gt;, Eric Binet&nbsp;&lt;<a href="mailto:eric@enjin.io">eric@enjin.io</a>&gt;, Ronan Sandford (@wighawag)&nbsp;&lt;<a href="mailto:wighawag@gmail.com">wighawag@gmail.com</a>&gt;, "ERC-1155: Multi Token Standard," <em>Ethereum Improvement Proposals</em>, no. 1155, June 2018. [Online serial]. Available: https://eips.ethereum.org/EIPS/eip-1155.</p>
+</div>
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "TechArticle",
+    
+    "headline": "ERC-1155: Multi Token Standard",
+    "name": "ERC-1155: Multi Token Standard",
+    
+    "author": "Witek Radomski <witek@enjin.io>, Andrew Cooke <ac0dem0nk3y@gmail.com>, Philippe Castonguay (@phabc) <pc@horizongames.net>, James Therien <james@turing-complete.com>, Eric Binet <eric@enjin.io>, Ronan Sandford (@wighawag) <wighawag@gmail.com>",
+    "dateCreated": "2018-06-17",
+    "datePublished": "2018-06-17",
+    
+    "discussionUrl": "https://github.com/ethereum/EIPs/issues/1155",
+    
+    "inLanguage": "en-US",
+    "license": "#copyright",
+    "copyrightYear": "2018"
+  }
+</script>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Ethereum Improvement Proposals</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Ethereum Improvement Proposals</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/ethereum/EIPs"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">ethereum/EIPs</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Ethereum Improvement Proposals (EIPs) describe standards for the Ethereum platform, including core protocol specifications, client APIs, and contract standards.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+
+</body></html>
 <html lang="en" class="scroll-pt-16 scroll-smooth md:scroll-pt-8 light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/styles/style.css"><link rel="stylesheet" href="/styles/main.css"><link rel="shortcut icon" href="/favicon.png"><link rel="icon" href="/favicon.svg"><link rel="apple-touch-icon" href="/favicon.png"><link rel="mask-icon" href="/mask-icon.svg" color="#000000"><link rel="preload" href="/api/tvl/bridges.json" as="fetch"><link rel="preload" href="/fonts/Roboto/roboto-v30-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="preload" href="/fonts/Roboto/roboto-v30-latin-500.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="preload" href="/fonts/Roboto/roboto-v30-latin-700.woff2" as="font" type="font/woff2" crossorigin="anonymous"><title>L2BEAT – The state of the layer two ecosystem</title><meta name="title" content="L2BEAT – The state of the layer two ecosystem"><meta name="description" content="L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today."><meta property="og:type" content="website"><meta property="og:url" content="https://l2beat.com/bridges/summary"><meta property="og:title" content="L2BEAT – The state of the layer two ecosystem"><meta property="og:description" content="L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today."><meta property="og:image" content="https://l2beat.com/meta-images/overview-bridges.png"><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://l2beat.com/bridges/summary"><meta property="twitter:title" content="L2BEAT – The state of the layer two ecosystem"><meta property="twitter:description" content="L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today."><meta property="twitter:image" content="https://l2beat.com/meta-images/overview-bridges.png"><script defer="" data-domain="l2beat.com" src="https://plausible.io/js/plausible.js"></script></head><body class="bg-white text-black dark:bg-neutral-900 dark:text-white"><div id="sidebar-menu" class="fixed left-0 bottom-0 top-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"><div class="mt-[11.5px] flex items-center justify-between px-4"><a href="/bridges/summary"><svg class="Logo h-8 w-auto" width="88" height="36" viewBox="0 0 88 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="L2BEAT logo"><g class="Logo-Animation"><path d="M15.75 1.53C17.37 2.48 18.80 3.70 19.60 5.43L26.16 1.53L33.81 5.20L35.55 11.91L19.89 31.42L16.55 34.60L4.07 19.31C3.43 18.58 2.80 17.75 2.19 16.83C1.55 15.92 1.03 14.96 0.64 13.95C0.21 12.94 0 11.95 0 10.97C0 8.74 0.42 6.82 1.28 5.20C2.10 3.58 3.28 2.33 4.80 1.44C6.33 0.56 8.13 0.11 10.21 0.11C12.26 0.11 14.10 0.59 15.75 1.53Z" fill="var(--brand-red)"></path><path d="M17.15 17.36H6.77V30.22H17.15V17.36Z" fill="var(--brand-red)"></path><path d="M16.96 35.20C17.42 35.65 17.99 35.88 18.66 35.88L35.61 35.64C36.29 35.64 36.91 35.55 37.31 34.95C37.83 34.17 36.45 31.18 34.63 30.97C32.82 30.75 27.73 30.74 24.83 30.48C24.60 30.46 24.54 30.13 24.62 29.91C24.83 29.29 33.27 19.30 33.27 19.30C33.91 18.57 34.54 17.74 35.15 16.83C35.79 15.91 36.31 14.95 36.71 13.94C37.13 12.93 37.35 11.94 37.35 10.96C37.35 8.73 36.92 6.81 36.06 5.19C35.24 3.57 34.06 2.32 32.54 1.44C31.01 0.55 29.21 0.11 27.13 0.11C25.09 0.11 23.24 0.58 21.59 1.53C19.97 2.47 18.54 3.70 17.74 5.42C17.27 6.43 17 8.07 17.27 9.18C17.50 10.09 17.73 10.32 18.42 10.55C19.11 10.78 19.33 10.28 19.56 9.18C19.79 8.08 20.17 6.84 20.71 5.97C21.40 4.87 22.67 4.06 23.69 3.68C24.55 3.36 25.98 3.09 27.13 3.22C29.18 3.45 30.63 4.18 31.70 5.42C32.78 6.66 33.61 8.72 33.37 10.28L33.36 10.33C33.22 11.29 33.02 12.60 32.54 13.53C32.05 14.48 30.56 16.35 29.64 17.42L16.96 31.90C16.54 32.33 16.32 32.87 16.32 33.55C16.32 34.19 16.54 34.74 16.96 35.20Z" fill="var(--text)"></path><path d="M4.40 22.70C4.40 22.59 4.40 22.20 4.40 21.55C4.43 20.86 4.44 20.09 4.44 19.24C4.47 18.36 4.47 17.50 4.44 16.68C4.44 15.83 4.41 15.17 4.36 14.70C4.30 14.10 4.29 13.56 4.32 13.09C4.37 12.63 4.40 12.10 4.40 11.53C4.40 11.14 4.41 10.80 4.44 10.50C4.47 10.17 4.54 9.89 4.65 9.67C4.76 9.42 4.93 9.25 5.18 9.14C5.43 9 5.79 8.93 6.25 8.93C6.69 8.93 7.12 9.08 7.53 9.38C7.97 9.69 8.23 10.10 8.31 10.62L8.93 18.82L9.06 29.30L14.58 29.13C14.77 29.13 15.05 29.23 15.41 29.42C15.79 29.58 15.98 29.79 15.98 30.04C15.98 30.26 15.89 30.45 15.69 30.61C15.50 30.75 15.27 30.88 14.99 30.99C14.75 31.07 14.48 31.14 14.21 31.19C13.96 31.22 13.78 31.23 13.67 31.23C13.45 31.26 13.12 31.29 12.68 31.32C12.24 31.32 11.78 31.32 11.28 31.32C10.82 31.32 10.36 31.32 9.92 31.32C9.48 31.32 9.15 31.32 8.93 31.32C8.66 31.45 8.33 31.51 7.94 31.48C7.56 31.45 7.24 31.44 7 31.44H5.72C5.50 31.44 5.25 31.38 4.98 31.27C4.73 31.14 4.54 30.99 4.40 30.82V22.70Z" fill="var(--text)"></path></g><path d="M40.26 29.21C40.26 28.69 40.27 28.19 40.30 27.72C40.35 27.26 40.38 26.78 40.38 26.28V25.04C40.38 24.93 40.37 24.74 40.34 24.47C40.31 24.17 40.28 23.86 40.26 23.56C40.26 23.23 40.24 22.93 40.21 22.65C40.19 22.38 40.17 22.19 40.17 22.08V17.75V13.58C40.17 12.81 40.21 12.07 40.30 11.36C40.41 10.62 40.43 9.89 40.38 9.17C40.93 8.54 41.59 8.16 42.36 8.02C43.13 7.85 43.91 7.77 44.71 7.77C45.86 7.77 46.91 8 47.84 8.47C48.78 8.91 49.56 9.71 50.19 10.86C50.66 11.77 50.99 12.62 51.18 13.42C51.37 14.19 51.47 15.08 51.47 16.10V17.25C51.25 17.94 51 18.57 50.73 19.15C50.48 19.70 50.08 20.21 49.53 20.67C49.34 20.81 49.11 20.95 48.83 21.09C48.56 21.20 48.36 21.32 48.25 21.46C49.30 22.06 50.05 22.78 50.52 23.60C51.02 24.43 51.26 25.42 51.26 26.57V27.64C51.21 27.97 51.07 28.34 50.85 28.76C50.63 29.14 50.41 29.44 50.19 29.66C49.64 30.13 49.16 30.47 48.75 30.69C48.34 30.91 47.92 31.08 47.51 31.19C47.10 31.30 46.66 31.35 46.19 31.35C45.73 31.35 45.16 31.35 44.50 31.35H43.02C42.80 31.30 42.63 31.24 42.52 31.19C42.44 31.13 42.36 31.08 42.28 31.02C42.22 30.94 42.14 30.87 42.03 30.82C41.95 30.73 41.81 30.65 41.62 30.57C41.45 30.49 41.30 30.43 41.16 30.40C41.05 30.38 40.94 30.35 40.83 30.32C40.75 30.29 40.65 30.25 40.54 30.20C40.46 30.14 40.37 30.05 40.26 29.91V29.21ZM43.72 28.55L43.80 29.08C43.97 29.14 44.12 29.21 44.26 29.29C44.39 29.35 44.52 29.40 44.63 29.46C44.74 29.51 44.85 29.55 44.96 29.58H45.04C45.51 29.58 45.97 29.40 46.44 29.04C46.91 28.69 47.14 28.22 47.14 27.64C47.14 27.34 47.17 27.02 47.22 26.69C47.31 26.36 47.28 25.87 47.14 25.21C47 24.41 46.62 23.82 45.99 23.44C45.35 23.05 44.71 22.86 44.05 22.86H43.80C43.75 23.66 43.72 24.37 43.72 25.00C43.72 25.64 43.72 26.34 43.72 27.11V28.55ZM43.72 20.51C44.90 20.04 45.73 19.40 46.19 18.57C46.69 17.75 46.93 16.72 46.93 15.48C46.93 15.01 46.92 14.44 46.89 13.75C46.87 13.06 46.77 12.40 46.61 11.77C46.44 11.14 46.18 10.60 45.82 10.16C45.46 9.69 44.96 9.46 44.30 9.46C43.72 9.46 43.14 9.57 42.56 9.79V10.12C42.56 10.56 42.61 10.97 42.69 11.36C42.80 11.74 42.88 12.10 42.94 12.43L43.72 20.51ZM53.44 27.48C53.38 26.32 53.28 25.11 53.15 23.85C53.04 22.58 52.90 21.38 52.74 20.22V17.17V14.08C52.74 14.02 52.74 13.86 52.74 13.58C52.76 13.31 52.78 13.01 52.78 12.68C52.80 12.35 52.83 12.03 52.86 11.73C52.89 11.40 52.91 11.17 52.94 11.03C53.02 10.34 53.37 9.83 53.97 9.50C54.60 9.17 55.32 8.95 56.12 8.84C56.94 8.71 57.76 8.65 58.59 8.68C59.41 8.68 60.07 8.68 60.57 8.68H60.32C60.51 8.68 60.77 8.72 61.10 8.80C61.46 8.86 61.64 9.01 61.64 9.25C61.64 9.45 61.56 9.60 61.39 9.71C61.26 9.79 61.09 9.83 60.90 9.83C60.90 9.83 60.73 9.86 60.40 9.91C60.07 9.94 59.69 10 59.25 10.08C58.84 10.13 58.42 10.20 58.01 10.29C57.63 10.34 57.39 10.38 57.31 10.41C56.95 10.49 56.72 10.68 56.61 10.99V12.02V13.13C56.64 13.57 56.67 14.13 56.69 14.82C56.75 15.51 56.79 16.19 56.82 16.88C56.84 17.54 56.87 18.13 56.90 18.65C56.93 19.15 56.94 19.41 56.94 19.44L57.11 19.89C57.65 19.89 58.22 19.88 58.80 19.85C59.37 19.80 59.91 19.75 60.40 19.73C60.82 19.70 61.19 19.77 61.52 19.93C61.87 20.10 62.05 20.32 62.05 20.59C62.05 20.81 61.97 20.99 61.80 21.13C61.67 21.24 61.49 21.33 61.27 21.42C61.05 21.47 60.83 21.53 60.61 21.58C60.39 21.61 60.22 21.64 60.11 21.66C59.70 21.72 59.40 21.77 59.21 21.83C59.02 21.86 58.84 21.88 58.67 21.91C58.51 21.91 58.31 21.91 58.09 21.91C57.90 21.91 57.60 21.91 57.19 21.91C57.19 22.98 57.17 24.04 57.15 25.09C57.12 26.10 57.11 27.15 57.11 28.22C57.52 28.22 57.83 28.22 58.05 28.22C58.27 28.19 58.48 28.18 58.67 28.18C58.86 28.15 59.07 28.14 59.29 28.14C59.54 28.11 59.87 28.10 60.28 28.10C60.42 28.10 60.61 28.11 60.86 28.14C61.13 28.16 61.39 28.22 61.64 28.30C61.91 28.36 62.15 28.45 62.34 28.59C62.53 28.73 62.63 28.92 62.63 29.17C62.63 29.39 62.55 29.58 62.38 29.74C62.22 29.88 62.01 30.01 61.76 30.12C61.54 30.20 61.32 30.28 61.10 30.36C60.88 30.42 60.72 30.46 60.61 30.49H58.01H57.11C57.05 30.49 56.93 30.49 56.73 30.49C56.57 30.46 56.38 30.45 56.16 30.45C55.96 30.42 55.77 30.40 55.58 30.40C55.41 30.38 55.29 30.36 55.21 30.36C54.91 30.36 54.58 30.31 54.22 30.20C53.86 30.06 53.60 29.87 53.44 29.62V27.48ZM63.07 30.07C63.07 29.61 63.10 28.98 63.15 28.18C63.24 27.35 63.32 26.56 63.40 25.79C63.48 24.99 63.55 24.30 63.61 23.73C63.69 23.15 63.73 22.85 63.73 22.82L65.30 11.23C65.30 11.21 65.31 11.10 65.34 10.90C65.39 10.71 65.45 10.49 65.50 10.24C65.56 10 65.61 9.76 65.67 9.54C65.72 9.30 65.77 9.12 65.79 9.01C65.82 8.87 65.85 8.72 65.88 8.55C65.93 8.36 65.98 8.18 66.04 8.02C66.09 7.85 66.18 7.72 66.29 7.61C66.40 7.50 66.55 7.44 66.74 7.44H68.31C68.53 7.44 68.72 7.55 68.88 7.77C69.05 7.99 69.17 8.20 69.26 8.39C69.34 8.64 69.45 8.95 69.59 9.34C69.75 9.69 69.92 10.05 70.08 10.41C70.25 10.77 70.38 11.10 70.49 11.40C70.60 11.67 70.66 11.82 70.66 11.85C71.59 14.90 72.53 17.93 73.46 20.92C74.40 23.92 75.15 26.82 75.73 29.62V29.83C75.73 30.27 75.52 30.60 75.11 30.82C74.73 31.04 74.38 31.15 74.08 31.15C73.97 31.15 73.79 31.15 73.54 31.15C73.30 31.12 73.03 31.09 72.76 31.06C72.51 31.01 72.28 30.93 72.06 30.82C71.87 30.71 71.76 30.56 71.73 30.36L70.57 24.01C70.03 24.01 69.35 24.03 68.55 24.06C67.79 24.08 67.11 24.10 66.53 24.10L66.37 24.22C66.26 26.42 66 28.60 65.59 30.78L65.42 31.02C65.37 31.08 65.24 31.20 65.05 31.39C64.89 31.56 64.78 31.67 64.72 31.72H64.60C64.16 31.72 63.79 31.60 63.48 31.35C63.21 31.11 63.07 30.83 63.07 30.53V30.07ZM69.96 21.75V21.13C69.93 21.02 69.89 20.84 69.83 20.59C69.81 20.32 69.76 20.04 69.71 19.77C69.65 19.49 69.60 19.25 69.54 19.03C69.52 18.78 69.49 18.61 69.46 18.53C69.41 18.28 69.30 17.90 69.13 17.38C68.99 16.83 68.83 16.26 68.64 15.69C68.47 15.11 68.31 14.56 68.14 14.04C67.98 13.51 67.85 13.13 67.77 12.88L66.62 21.75H69.96ZM79.58 29.58V28.55C79.58 28.22 79.58 27.70 79.58 26.98C79.61 26.24 79.63 25.42 79.63 24.51C79.65 23.60 79.68 22.65 79.71 21.66C79.74 20.65 79.76 19.69 79.79 18.78C79.82 17.87 79.85 17.06 79.87 16.35C79.90 15.63 79.93 15.10 79.96 14.74C79.96 14.05 80 13.38 80.08 12.72C80.19 12.06 80.23 11.36 80.20 10.62H76.86C76.67 10.62 76.45 10.57 76.20 10.49C75.98 10.38 75.87 10.22 75.87 10.00C75.87 9.80 75.92 9.67 76 9.58C76.11 9.50 76.27 9.42 76.49 9.34C77.32 9.34 78.10 9.31 78.84 9.25C79.61 9.20 80.37 9.14 81.11 9.09C81.85 9.01 82.61 8.94 83.38 8.88C84.15 8.83 84.96 8.80 85.81 8.80H87.21L88 9.21V9.50C88 9.78 87.83 9.97 87.50 10.08C87.20 10.19 86.83 10.27 86.39 10.33C85.84 10.41 85.26 10.44 84.66 10.41C84.08 10.38 83.69 10.41 83.50 10.49V13.95C83.50 15.52 83.54 17.07 83.63 18.61C83.71 20.15 83.75 21.66 83.75 23.15C83.75 23.86 83.75 24.54 83.75 25.17C83.78 25.80 83.79 26.42 83.79 27.02C83.79 27.63 83.76 28.23 83.71 28.84C83.68 29.44 83.61 30.09 83.50 30.78C83.36 30.94 83.19 31.08 82.97 31.19C82.75 31.27 82.54 31.34 82.35 31.39H81.32C81.01 31.39 80.70 31.39 80.37 31.39C80.04 31.37 79.78 31.16 79.58 30.78V29.58Z" fill="var(--text)"></path></svg></a><div class="flex gap-4"><button data-role="dark-theme-toggle" class="flex gap-4 font-medium" title="Change color scheme"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Toggle light mode" class="hidden dark:block"><path d="M11.9875 0.78916C11.7756 0.792472 11.5736 0.87972 11.426 1.03176C11.2784 1.18379 11.1971 1.38819 11.2 1.6001V4.0001C11.1985 4.10611 11.2181 4.21136 11.2576 4.30973C11.2971 4.40811 11.3558 4.49764 11.4302 4.57314C11.5047 4.64863 11.5934 4.70858 11.6912 4.7495C11.789 4.79042 11.8939 4.81149 12 4.81149C12.106 4.81149 12.211 4.79042 12.3088 4.7495C12.4066 4.70858 12.4953 4.64863 12.5697 4.57314C12.6441 4.49764 12.7028 4.40811 12.7424 4.30973C12.7819 4.21136 12.8015 4.10611 12.8 4.0001V1.6001C12.8014 1.49307 12.7814 1.38683 12.7411 1.28768C12.7007 1.18852 12.6409 1.09847 12.5652 1.02286C12.4894 0.947239 12.3992 0.887594 12.3 0.847452C12.2008 0.80731 12.0945 0.787488 11.9875 0.78916ZM4.63747 3.83916C4.47845 3.83951 4.32315 3.88724 4.19139 3.97625C4.05962 4.06526 3.95736 4.19151 3.89767 4.3389C3.83798 4.48628 3.82356 4.64811 3.85625 4.80373C3.88894 4.95935 3.96726 5.10169 4.08122 5.2126L5.77809 6.90947C5.85181 6.98625 5.9401 7.04755 6.03781 7.08977C6.13551 7.132 6.24066 7.15431 6.34709 7.15539C6.45352 7.15647 6.5591 7.13631 6.65764 7.09607C6.75618 7.05584 6.8457 6.99635 6.92096 6.92109C6.99622 6.84583 7.05571 6.75631 7.09594 6.65777C7.13618 6.55923 7.15634 6.45365 7.15526 6.34722C7.15418 6.24078 7.13187 6.13564 7.08964 6.03794C7.04742 5.94023 6.98612 5.85194 6.90934 5.77822L5.21247 4.08135C5.13773 4.00452 5.04832 3.9435 4.94955 3.90189C4.85077 3.86029 4.74465 3.83896 4.63747 3.83916ZM19.3375 3.83916C19.1296 3.84535 18.9324 3.93222 18.7875 4.08135L17.0906 5.77822C17.0138 5.85194 16.9525 5.94023 16.9103 6.03794C16.8681 6.13564 16.8458 6.24078 16.8447 6.34722C16.8436 6.45365 16.8638 6.55922 16.904 6.65776C16.9442 6.7563 17.0037 6.84583 17.079 6.92109C17.1542 6.99635 17.2438 7.05584 17.3423 7.09607C17.4408 7.1363 17.5464 7.15647 17.6528 7.15539C17.7593 7.1543 17.8644 7.132 17.9621 7.08977C18.0598 7.04754 18.1481 6.98625 18.2218 6.90947L19.9187 5.2126C20.0343 5.10023 20.1133 4.95555 20.1452 4.79754C20.1772 4.63952 20.1607 4.47554 20.0979 4.32707C20.035 4.1786 19.9288 4.05257 19.7931 3.96551C19.6574 3.87845 19.4986 3.83441 19.3375 3.83916ZM12 6.4001C10.5148 6.4001 9.09037 6.9901 8.04017 8.0403C6.98997 9.0905 6.39997 10.5149 6.39997 12.0001C6.39997 13.4853 6.98997 14.9097 8.04017 15.9599C9.09037 17.0101 10.5148 17.6001 12 17.6001C13.4852 17.6001 14.9096 17.0101 15.9598 15.9599C17.01 14.9097 17.6 13.4853 17.6 12.0001C17.6 10.5149 17.01 9.0905 15.9598 8.0403C14.9096 6.9901 13.4852 6.4001 12 6.4001ZM1.59997 11.2001C1.49396 11.1986 1.38871 11.2182 1.29033 11.2577C1.19196 11.2972 1.10242 11.3559 1.02693 11.4304C0.951431 11.5048 0.891482 11.5935 0.850564 11.6913C0.809646 11.7891 0.788574 11.8941 0.788574 12.0001C0.788574 12.1061 0.809646 12.2111 0.850564 12.3089C0.891482 12.4067 0.951431 12.4954 1.02693 12.5698C1.10242 12.6443 1.19196 12.7029 1.29033 12.7425C1.38871 12.782 1.49396 12.8016 1.59997 12.8001H3.99997C4.10598 12.8016 4.21123 12.782 4.3096 12.7425C4.40798 12.7029 4.49751 12.6443 4.57301 12.5698C4.64851 12.4954 4.70845 12.4067 4.74937 12.3089C4.79029 12.2111 4.81136 12.1061 4.81136 12.0001C4.81136 11.8941 4.79029 11.7891 4.74937 11.6913C4.70845 11.5935 4.64851 11.5048 4.57301 11.4304C4.49751 11.3559 4.40798 11.2972 4.3096 11.2577C4.21123 11.2182 4.10598 11.1986 3.99997 11.2001H1.59997ZM20 11.2001C19.894 11.1986 19.7887 11.2182 19.6903 11.2577C19.592 11.2972 19.5024 11.3559 19.4269 11.4304C19.3514 11.5048 19.2915 11.5935 19.2506 11.6913C19.2096 11.7891 19.1886 11.8941 19.1886 12.0001C19.1886 12.1061 19.2096 12.2111 19.2506 12.3089C19.2915 12.4067 19.3514 12.4954 19.4269 12.5698C19.5024 12.6443 19.592 12.7029 19.6903 12.7425C19.7887 12.782 19.894 12.8016 20 12.8001H22.4C22.506 12.8016 22.6112 12.782 22.7096 12.7425C22.808 12.7029 22.8975 12.6443 22.973 12.5698C23.0485 12.4954 23.1085 12.4067 23.1494 12.3089C23.1903 12.2111 23.2114 12.1061 23.2114 12.0001C23.2114 11.8941 23.1903 11.7891 23.1494 11.6913C23.1085 11.5935 23.0485 11.5048 22.973 11.4304C22.8975 11.3559 22.808 11.2972 22.7096 11.2577C22.6112 11.2182 22.506 11.1986 22.4 11.2001H20ZM6.32809 16.8485C6.12025 16.8547 5.92299 16.9416 5.77809 17.0907L4.08122 18.7876C4.00444 18.8613 3.94315 18.9496 3.90092 19.0473C3.85869 19.145 3.83639 19.2502 3.8353 19.3566C3.83422 19.463 3.85439 19.5686 3.89462 19.6671C3.93485 19.7657 3.99434 19.8552 4.0696 19.9305C4.14486 20.0057 4.23439 20.0652 4.33293 20.1054C4.43147 20.1457 4.53704 20.1658 4.64348 20.1648C4.74991 20.1637 4.85505 20.1414 4.95275 20.0991C5.05046 20.0569 5.13875 19.9956 5.21247 19.9188L6.90934 18.222C7.02495 18.1096 7.1039 17.9649 7.13587 17.8069C7.16784 17.6489 7.15132 17.4849 7.08849 17.3364C7.02566 17.188 6.91944 17.0619 6.78375 16.9749C6.64806 16.8878 6.48924 16.8438 6.32809 16.8485ZM17.6484 16.8485C17.4893 16.8486 17.3337 16.8961 17.2017 16.985C17.0697 17.0739 16.9672 17.2001 16.9073 17.3475C16.8475 17.495 16.8329 17.657 16.8655 17.8127C16.8982 17.9685 16.9765 18.111 17.0906 18.222L18.7875 19.9188C18.8612 19.9956 18.9495 20.0569 19.0472 20.0991C19.1449 20.1414 19.25 20.1637 19.3565 20.1648C19.4629 20.1658 19.5685 20.1457 19.667 20.1054C19.7655 20.0652 19.8551 20.0057 19.9303 19.9305C20.0056 19.8552 20.0651 19.7657 20.1053 19.6671C20.1455 19.5686 20.1657 19.463 20.1646 19.3566C20.1635 19.2502 20.1412 19.145 20.099 19.0473C20.0568 18.9496 19.9955 18.8613 19.9187 18.7876L18.2218 17.0907C18.1473 17.0141 18.0581 16.9532 17.9596 16.9116C17.8612 16.87 17.7553 16.8485 17.6484 16.8485ZM11.9875 19.1892C11.7756 19.1925 11.5736 19.2797 11.426 19.4318C11.2784 19.5838 11.1971 19.7882 11.2 20.0001V22.4001C11.1985 22.5061 11.2181 22.6114 11.2576 22.7097C11.2971 22.8081 11.3558 22.8976 11.4302 22.9731C11.5047 23.0486 11.5934 23.1086 11.6912 23.1495C11.789 23.1904 11.8939 23.2115 12 23.2115C12.106 23.2115 12.211 23.1904 12.3088 23.1495C12.4066 23.1086 12.4953 23.0486 12.5697 22.9731C12.6441 22.8976 12.7028 22.8081 12.7424 22.7097C12.7819 22.6114 12.8015 22.5061 12.8 22.4001V20.0001C12.8014 19.8931 12.7814 19.7868 12.7411 19.6877C12.7007 19.5885 12.6409 19.4985 12.5652 19.4229C12.4894 19.3472 12.3992 19.2876 12.3 19.2474C12.2008 19.2073 12.0945 19.1875 11.9875 19.1892Z"></path></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Toggle dark mode" class="block dark:hidden"><path fill-rule="evenodd" d="M22.2 6.82C20.96 5.69 19.31 5 17.5 5C13.63 5 10.5 8.13 10.5 12C10.5 15.87 13.63 19 17.5 19C19.31 19 20.96 18.31 22.2 17.18C20.35 20.65 16.7 23 12.5 23C6.42 23 1.5 18.08 1.5 12C1.5 5.92 6.42 1 12.5 1C16.7 1 20.35 3.35 22.2 6.82Z"></path></svg></button><button id="sidebar-menu-close"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Close menu" class="block"><rect x="5.63599" y="4.22182" width="20" height="2" transform="rotate(45 5.63599 4.22182)"></rect><rect x="4.2218" y="18.364" width="20" height="2" transform="rotate(-45 4.2218 18.364)"></rect></svg></button></div></div><div class="relative mt-2 flex-1 overflow-y-auto overflow-x-visible"><ul class="mt-8 px-6"><li><div class="mb-4 text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200"><a href="/scaling/summary">Scaling</a></div><ul class="ml-4 flex flex-col gap-4"><li class="flex gap-2 font-medium"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Summary" class="h-auto w-4"><g clip-path="url(#clip0_4_3317)"><path d="M11.9575 1.39722C6.07957 1.39722 1.31488 6.16191 1.31488 12.0398C1.31488 17.9177 6.07957 22.6824 11.9575 22.6824C14.8182 22.6824 17.4097 21.5479 19.3221 19.7115L11.9575 12.0398V1.39722Z" fill="#50E6FF"></path><path d="M22.6001 12.0398C22.6001 6.16191 17.8354 1.39722 11.9575 1.39722V12.0398H22.6001Z" fill="#0078D4"></path><path d="M22.6001 12.0398H11.9575L19.3221 19.7115C21.3389 17.7746 22.6001 15.057 22.6001 12.0398Z" fill="#00A5FF"></path><path d="M16.9038 0.0786133L11.9492 12.0399L23.9997 7.33446C22.762 4.16581 20.2944 1.4833 16.9038 0.0786133Z" fill="#D864FF"></path></g><defs><clipPath id="clip0_4_3317"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg><a href="/scaling/summary">Summary</a></li><li class="flex gap-2 font-medium"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Risk icon" class="h-auto w-4"><path d="M21.5932 4.8C21.5932 4.8 22.1926 18.6 12.1036 24C1.80702 18.6 2.40642 4.8 2.40642 4.8C7.20342 4.8 11.9998 0 11.9998 0C11.9998 0 16.1968 4.8 21.5932 4.8Z" fill="#FFC107"></path><path d="M10.7998 16.8852C10.7998 16.7238 10.828 16.5762 10.8856 16.4376C10.942 16.3008 11.023 16.182 11.1274 16.0824C11.23 15.9816 11.3566 15.903 11.5018 15.8466C11.6482 15.7914 11.8126 15.762 11.9962 15.762C12.1798 15.762 12.3454 15.7914 12.493 15.8466C12.643 15.903 12.7696 15.9816 12.8722 16.0824C12.9772 16.182 13.0582 16.3008 13.114 16.4376C13.1716 16.5762 13.1998 16.7238 13.1998 16.8852C13.1998 17.0472 13.1716 17.1948 13.114 17.3292C13.0576 17.4642 12.9766 17.5806 12.8722 17.682C12.7696 17.7816 12.643 17.8596 12.493 17.9172C12.3454 17.9724 12.1798 18 11.9962 18C11.812 18 11.6482 17.9724 11.5018 17.9166C11.3566 17.859 11.23 17.781 11.1274 17.6814C11.0224 17.58 10.9414 17.4636 10.8856 17.3286C10.828 17.1942 10.7998 17.0466 10.7998 16.8852ZM12.8878 14.4H11.104L10.8514 7.19995H13.1398L12.8878 14.4Z" fill="#5D4037"></path></svg><a href="/scaling/risk">Risks</a></li><li class="flex items-center gap-2 font-medium"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Activity icon" class="h-auto w-4"><g clip-path="url(#clip0_1221_33203)"><path d="M24 20.6667H0V12.6667L6.66667 2.66667L16 7.33333L24 0V20.6667Z" fill="#3756FD"></path><path d="M24 23.9999H0V17.3333L6.66667 11.9999L16 13.3333L24 7.33325V23.9999Z" fill="#FF46C0"></path></g><defs><clipPath id="clip0_1221_33203"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg><a href="/scaling/activity">Activity</a></li></ul></li></ul><ul class="mt-8 px-6"><li><div class="mb-4 flex items-center gap-2"><span class="text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200"><a href="/bridges/summary">Bridges</a></span></div><ul class="ml-4 flex flex-col gap-4"><li class="flex items-center gap-2 font-medium"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Summary" class="h-auto w-4"><g clip-path="url(#clip0_4_3317)"><path d="M11.9575 1.39722C6.07957 1.39722 1.31488 6.16191 1.31488 12.0398C1.31488 17.9177 6.07957 22.6824 11.9575 22.6824C14.8182 22.6824 17.4097 21.5479 19.3221 19.7115L11.9575 12.0398V1.39722Z" fill="#50E6FF"></path><path d="M22.6001 12.0398C22.6001 6.16191 17.8354 1.39722 11.9575 1.39722V12.0398H22.6001Z" fill="#0078D4"></path><path d="M22.6001 12.0398H11.9575L19.3221 19.7115C21.3389 17.7746 22.6001 15.057 22.6001 12.0398Z" fill="#00A5FF"></path><path d="M16.9038 0.0786133L11.9492 12.0399L23.9997 7.33446C22.762 4.16581 20.2944 1.4833 16.9038 0.0786133Z" fill="#D864FF"></path></g><defs><clipPath id="clip0_4_3317"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg><a href="/bridges/summary">Summary</a></li><li class="flex items-center gap-2 font-medium"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Risk icon" class="h-auto w-4"><path d="M21.5932 4.8C21.5932 4.8 22.1926 18.6 12.1036 24C1.80702 18.6 2.40642 4.8 2.40642 4.8C7.20342 4.8 11.9998 0 11.9998 0C11.9998 0 16.1968 4.8 21.5932 4.8Z" fill="#FFC107"></path><path d="M10.7998 16.8852C10.7998 16.7238 10.828 16.5762 10.8856 16.4376C10.942 16.3008 11.023 16.182 11.1274 16.0824C11.23 15.9816 11.3566 15.903 11.5018 15.8466C11.6482 15.7914 11.8126 15.762 11.9962 15.762C12.1798 15.762 12.3454 15.7914 12.493 15.8466C12.643 15.903 12.7696 15.9816 12.8722 16.0824C12.9772 16.182 13.0582 16.3008 13.114 16.4376C13.1716 16.5762 13.1998 16.7238 13.1998 16.8852C13.1998 17.0472 13.1716 17.1948 13.114 17.3292C13.0576 17.4642 12.9766 17.5806 12.8722 17.682C12.7696 17.7816 12.643 17.8596 12.493 17.9172C12.3454 17.9724 12.1798 18 11.9962 18C11.812 18 11.6482 17.9724 11.5018 17.9166C11.3566 17.859 11.23 17.781 11.1274 17.6814C11.0224 17.58 10.9414 17.4636 10.8856 17.3286C10.828 17.1942 10.7998 17.0466 10.7998 16.8852ZM12.8878 14.4H11.104L10.8514 7.19995H13.1398L12.8878 14.4Z" fill="#5D4037"></path></svg><a href="/bridges/risk">Risks</a></li></ul></li></ul><hr class="mt-8 mb-6 w-full border-gray-200 dark:border-gray-850"><ul class="flex flex-col gap-4 px-6 text-sm font-medium"><li><a rel="noopener noreferrer" target="_blank" href="https://gov.l2beat.com/">Forum</a></li><li><a href="/donate">Donate</a></li><li><a href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">Governance</a></li><li><a href="/faq">FAQ</a></li><li><a rel="noopener noreferrer" target="_blank" class="flex items-center" href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">Jobs</a></li></ul><hr class="my-6 w-full border-gray-200 dark:border-gray-850"><ul class="mb-12 flex gap-4 px-6"><li><a rel="noopener noreferrer" target="_blank" href="https://twitter.com/l2beat" title="Twitter"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="X logo"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://discord.gg/eaVKXPmtWk" title="Discord"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Discord logo"><path fill-rule="evenodd" d="M20.32 4.66C18.79 3.95 17.15 3.44 15.43 3.14C15.4 3.13 15.37 3.15 15.35 3.18C15.14 3.55 14.91 4.04 14.75 4.43C12.9 4.15 11.07 4.15 9.26 4.43C9.09 4.03 8.85 3.55 8.64 3.18C8.62 3.15 8.59 3.14 8.56 3.14C6.85 3.44 5.21 3.95 3.68 4.66C3.66 4.66 3.65 4.67 3.64 4.68C0.53 9.33 -0.32 13.87 0.1 18.34C0.1 18.37 0.11 18.39 0.13 18.4C2.18 19.91 4.17 20.82 6.12 21.43C6.15 21.44 6.19 21.43 6.21 21.4C6.67 20.77 7.08 20.11 7.43 19.41C7.45 19.37 7.43 19.32 7.39 19.3C6.74 19.05 6.12 18.75 5.52 18.41C5.47 18.38 5.47 18.31 5.51 18.28C5.64 18.19 5.76 18.09 5.88 17.99C5.91 17.97 5.94 17.97 5.96 17.98C9.89 19.77 14.14 19.77 18.02 17.98C18.05 17.97 18.08 17.97 18.1 17.99C18.22 18.09 18.35 18.19 18.47 18.28C18.52 18.31 18.51 18.38 18.47 18.41C17.87 18.76 17.25 19.05 16.59 19.3C16.55 19.32 16.53 19.37 16.55 19.41C16.91 20.11 17.33 20.77 17.78 21.4C17.8 21.43 17.83 21.44 17.86 21.43C19.82 20.82 21.81 19.91 23.87 18.4C23.88 18.39 23.89 18.37 23.9 18.34C24.4 13.17 23.06 8.67 20.35 4.68C20.34 4.67 20.33 4.66 20.32 4.66ZM8.02 15.62C6.84 15.62 5.86 14.53 5.86 13.2C5.86 11.86 6.82 10.78 8.02 10.78C9.23 10.78 10.2 11.87 10.18 13.2C10.18 14.53 9.22 15.62 8.02 15.62ZM15.99 15.62C14.81 15.62 13.84 14.53 13.84 13.2C13.84 11.86 14.79 10.78 15.99 10.78C17.21 10.78 18.17 11.87 18.15 13.2C18.15 14.53 17.21 15.62 15.99 15.62Z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://github.com/l2beat/l2beat" title="Github"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Github logo"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://www.linkedin.com/company/l2beat/" title="LinkedIn"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="LinkedIn logo"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/channel/UCDrl-fNXFjOoykr4lQij9BA/videos" title="YouTube"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="YouTube logo"><path d="M19.615 3.184C16.011 2.938 7.984 2.939 4.385 3.184C0.488 3.45 0.029 5.804 0 12C0.029 18.185 0.484 20.549 4.385 20.816C7.985 21.061 16.011 21.062 19.615 20.816C23.512 20.55 23.971 18.196 24 12C23.971 5.815 23.516 3.451 19.615 3.184ZM9 16V8L17 11.993L9 16Z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://medium.com/l2beat" title="Medium"><svg width="24" height="24" viewBox="0 0 24 15" fill="var(--text)" role="img" aria-label="Medium logo"><path d="M6.8 0.600098C5.90701 0.600098 5.02277 0.775985 4.19775 1.11772C3.37274 1.45945 2.62311 1.96033 1.99167 2.59177C1.36024 3.22321 0.859351 3.97284 0.517619 4.79785C0.175887 5.62286 0 6.50711 0 7.4001C0 8.29309 0.175887 9.17733 0.517619 10.0023C0.859351 10.8274 1.36024 11.577 1.99167 12.2084C2.62311 12.8399 3.37274 13.3407 4.19775 13.6825C5.02277 14.0242 5.90701 14.2001 6.8 14.2001C7.69299 14.2001 8.57723 14.0242 9.40225 13.6825C10.2273 13.3407 10.9769 12.8399 11.6083 12.2084C12.2398 11.577 12.7406 10.8274 13.0824 10.0023C13.4241 9.17733 13.6 8.29309 13.6 7.4001C13.6 6.50711 13.4241 5.62286 13.0824 4.79785C12.7406 3.97284 12.2398 3.22321 11.6083 2.59177C10.9769 1.96033 10.2273 1.45945 9.40225 1.11772C8.57723 0.775985 7.69299 0.600098 6.8 0.600098ZM17.6 1.4001C17.1798 1.4001 16.7637 1.55529 16.3754 1.85682C15.9872 2.15835 15.6344 2.60031 15.3373 3.15746C15.0401 3.71461 14.8044 4.37604 14.6436 5.104C14.4828 5.83195 14.4 6.61217 14.4 7.4001C14.4 8.18803 14.4828 8.96824 14.6436 9.6962C14.8044 10.4242 15.0401 11.0856 15.3373 11.6427C15.6344 12.1999 15.9872 12.6418 16.3754 12.9434C16.7637 13.2449 17.1798 13.4001 17.6 13.4001C18.0202 13.4001 18.4363 13.2449 18.8246 12.9434C19.2128 12.6418 19.5656 12.1999 19.8627 11.6427C20.1599 11.0856 20.3956 10.4242 20.5564 9.6962C20.7172 8.96824 20.8 8.18803 20.8 7.4001C20.8 6.61217 20.7172 5.83195 20.5564 5.104C20.3956 4.37604 20.1599 3.71461 19.8627 3.15746C19.5656 2.60031 19.2128 2.15835 18.8246 1.85682C18.4363 1.55529 18.0202 1.4001 17.6 1.4001ZM22.8 2.2001C22.4817 2.2001 22.1765 2.74795 21.9515 3.72314C21.7264 4.69833 21.6 6.02097 21.6 7.4001C21.6 8.77922 21.7264 10.1019 21.9515 11.0771C22.1765 12.0522 22.4817 12.6001 22.8 12.6001C23.1183 12.6001 23.4235 12.0522 23.6485 11.0771C23.8736 10.1019 24 8.77922 24 7.4001C24 6.02097 23.8736 4.69833 23.6485 3.72314C23.4235 2.74795 23.1183 2.2001 22.8 2.2001Z"></path></svg></a></li></ul></div></div><a class="group block bg-[#008B84] px-1 py-1.5 text-center text-xs font-medium text-white xs:px-4" href="https://explorer.gitcoin.co/#/round/137/0xa1d52f9b5339792651861329a046dd912761e9a9/0xa1d52f9b5339792651861329a046dd912761e9a9-15" target="_blank">L2BEAT is participating in Gitcoin Grants 19!<span class="ml-2 hidden group-hover:underline xs:inline">Donate here<svg width="15" height="14" viewBox="0 0 15 14" fill="var(--text)" role="img" aria-label="Arrow pointing to the right icon" class="relative -top-px ml-1 inline-block h-3 w-3"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.10329 6.29419C1.73956 6.29419 1.4447 6.60754 1.4447 6.99408C1.4447 7.38062 1.73956 7.69397 2.10329 7.69397L11.6993 7.69397L8.27358 11.3345C8.01639 11.6079 8.01639 12.051 8.27358 12.3243C8.53078 12.5977 8.94777 12.5977 9.20496 12.3243L13.7549 7.489C14.0121 7.21568 14.0121 6.77253 13.7549 6.49921L9.20496 1.66387C8.94777 1.39055 8.53078 1.39055 8.27358 1.66387C8.01639 1.9372 8.01639 2.38035 8.27358 2.65367L11.6992 6.29419L2.10329 6.29419Z"></path></svg></span></a><div class="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16"><nav class="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12"><ul class="flex h-full items-center"><li class="mr-4 lg:mr-8"><a href="/bridges/summary"><svg class="Logo h-8 w-auto" width="88" height="36" viewBox="0 0 88 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="L2BEAT logo"><g class="Logo-Animation"><path d="M15.75 1.53C17.37 2.48 18.80 3.70 19.60 5.43L26.16 1.53L33.81 5.20L35.55 11.91L19.89 31.42L16.55 34.60L4.07 19.31C3.43 18.58 2.80 17.75 2.19 16.83C1.55 15.92 1.03 14.96 0.64 13.95C0.21 12.94 0 11.95 0 10.97C0 8.74 0.42 6.82 1.28 5.20C2.10 3.58 3.28 2.33 4.80 1.44C6.33 0.56 8.13 0.11 10.21 0.11C12.26 0.11 14.10 0.59 15.75 1.53Z" fill="var(--brand-red)"></path><path d="M17.15 17.36H6.77V30.22H17.15V17.36Z" fill="var(--brand-red)"></path><path d="M16.96 35.20C17.42 35.65 17.99 35.88 18.66 35.88L35.61 35.64C36.29 35.64 36.91 35.55 37.31 34.95C37.83 34.17 36.45 31.18 34.63 30.97C32.82 30.75 27.73 30.74 24.83 30.48C24.60 30.46 24.54 30.13 24.62 29.91C24.83 29.29 33.27 19.30 33.27 19.30C33.91 18.57 34.54 17.74 35.15 16.83C35.79 15.91 36.31 14.95 36.71 13.94C37.13 12.93 37.35 11.94 37.35 10.96C37.35 8.73 36.92 6.81 36.06 5.19C35.24 3.57 34.06 2.32 32.54 1.44C31.01 0.55 29.21 0.11 27.13 0.11C25.09 0.11 23.24 0.58 21.59 1.53C19.97 2.47 18.54 3.70 17.74 5.42C17.27 6.43 17 8.07 17.27 9.18C17.50 10.09 17.73 10.32 18.42 10.55C19.11 10.78 19.33 10.28 19.56 9.18C19.79 8.08 20.17 6.84 20.71 5.97C21.40 4.87 22.67 4.06 23.69 3.68C24.55 3.36 25.98 3.09 27.13 3.22C29.18 3.45 30.63 4.18 31.70 5.42C32.78 6.66 33.61 8.72 33.37 10.28L33.36 10.33C33.22 11.29 33.02 12.60 32.54 13.53C32.05 14.48 30.56 16.35 29.64 17.42L16.96 31.90C16.54 32.33 16.32 32.87 16.32 33.55C16.32 34.19 16.54 34.74 16.96 35.20Z" fill="var(--text)"></path><path d="M4.40 22.70C4.40 22.59 4.40 22.20 4.40 21.55C4.43 20.86 4.44 20.09 4.44 19.24C4.47 18.36 4.47 17.50 4.44 16.68C4.44 15.83 4.41 15.17 4.36 14.70C4.30 14.10 4.29 13.56 4.32 13.09C4.37 12.63 4.40 12.10 4.40 11.53C4.40 11.14 4.41 10.80 4.44 10.50C4.47 10.17 4.54 9.89 4.65 9.67C4.76 9.42 4.93 9.25 5.18 9.14C5.43 9 5.79 8.93 6.25 8.93C6.69 8.93 7.12 9.08 7.53 9.38C7.97 9.69 8.23 10.10 8.31 10.62L8.93 18.82L9.06 29.30L14.58 29.13C14.77 29.13 15.05 29.23 15.41 29.42C15.79 29.58 15.98 29.79 15.98 30.04C15.98 30.26 15.89 30.45 15.69 30.61C15.50 30.75 15.27 30.88 14.99 30.99C14.75 31.07 14.48 31.14 14.21 31.19C13.96 31.22 13.78 31.23 13.67 31.23C13.45 31.26 13.12 31.29 12.68 31.32C12.24 31.32 11.78 31.32 11.28 31.32C10.82 31.32 10.36 31.32 9.92 31.32C9.48 31.32 9.15 31.32 8.93 31.32C8.66 31.45 8.33 31.51 7.94 31.48C7.56 31.45 7.24 31.44 7 31.44H5.72C5.50 31.44 5.25 31.38 4.98 31.27C4.73 31.14 4.54 30.99 4.40 30.82V22.70Z" fill="var(--text)"></path></g><path d="M40.26 29.21C40.26 28.69 40.27 28.19 40.30 27.72C40.35 27.26 40.38 26.78 40.38 26.28V25.04C40.38 24.93 40.37 24.74 40.34 24.47C40.31 24.17 40.28 23.86 40.26 23.56C40.26 23.23 40.24 22.93 40.21 22.65C40.19 22.38 40.17 22.19 40.17 22.08V17.75V13.58C40.17 12.81 40.21 12.07 40.30 11.36C40.41 10.62 40.43 9.89 40.38 9.17C40.93 8.54 41.59 8.16 42.36 8.02C43.13 7.85 43.91 7.77 44.71 7.77C45.86 7.77 46.91 8 47.84 8.47C48.78 8.91 49.56 9.71 50.19 10.86C50.66 11.77 50.99 12.62 51.18 13.42C51.37 14.19 51.47 15.08 51.47 16.10V17.25C51.25 17.94 51 18.57 50.73 19.15C50.48 19.70 50.08 20.21 49.53 20.67C49.34 20.81 49.11 20.95 48.83 21.09C48.56 21.20 48.36 21.32 48.25 21.46C49.30 22.06 50.05 22.78 50.52 23.60C51.02 24.43 51.26 25.42 51.26 26.57V27.64C51.21 27.97 51.07 28.34 50.85 28.76C50.63 29.14 50.41 29.44 50.19 29.66C49.64 30.13 49.16 30.47 48.75 30.69C48.34 30.91 47.92 31.08 47.51 31.19C47.10 31.30 46.66 31.35 46.19 31.35C45.73 31.35 45.16 31.35 44.50 31.35H43.02C42.80 31.30 42.63 31.24 42.52 31.19C42.44 31.13 42.36 31.08 42.28 31.02C42.22 30.94 42.14 30.87 42.03 30.82C41.95 30.73 41.81 30.65 41.62 30.57C41.45 30.49 41.30 30.43 41.16 30.40C41.05 30.38 40.94 30.35 40.83 30.32C40.75 30.29 40.65 30.25 40.54 30.20C40.46 30.14 40.37 30.05 40.26 29.91V29.21ZM43.72 28.55L43.80 29.08C43.97 29.14 44.12 29.21 44.26 29.29C44.39 29.35 44.52 29.40 44.63 29.46C44.74 29.51 44.85 29.55 44.96 29.58H45.04C45.51 29.58 45.97 29.40 46.44 29.04C46.91 28.69 47.14 28.22 47.14 27.64C47.14 27.34 47.17 27.02 47.22 26.69C47.31 26.36 47.28 25.87 47.14 25.21C47 24.41 46.62 23.82 45.99 23.44C45.35 23.05 44.71 22.86 44.05 22.86H43.80C43.75 23.66 43.72 24.37 43.72 25.00C43.72 25.64 43.72 26.34 43.72 27.11V28.55ZM43.72 20.51C44.90 20.04 45.73 19.40 46.19 18.57C46.69 17.75 46.93 16.72 46.93 15.48C46.93 15.01 46.92 14.44 46.89 13.75C46.87 13.06 46.77 12.40 46.61 11.77C46.44 11.14 46.18 10.60 45.82 10.16C45.46 9.69 44.96 9.46 44.30 9.46C43.72 9.46 43.14 9.57 42.56 9.79V10.12C42.56 10.56 42.61 10.97 42.69 11.36C42.80 11.74 42.88 12.10 42.94 12.43L43.72 20.51ZM53.44 27.48C53.38 26.32 53.28 25.11 53.15 23.85C53.04 22.58 52.90 21.38 52.74 20.22V17.17V14.08C52.74 14.02 52.74 13.86 52.74 13.58C52.76 13.31 52.78 13.01 52.78 12.68C52.80 12.35 52.83 12.03 52.86 11.73C52.89 11.40 52.91 11.17 52.94 11.03C53.02 10.34 53.37 9.83 53.97 9.50C54.60 9.17 55.32 8.95 56.12 8.84C56.94 8.71 57.76 8.65 58.59 8.68C59.41 8.68 60.07 8.68 60.57 8.68H60.32C60.51 8.68 60.77 8.72 61.10 8.80C61.46 8.86 61.64 9.01 61.64 9.25C61.64 9.45 61.56 9.60 61.39 9.71C61.26 9.79 61.09 9.83 60.90 9.83C60.90 9.83 60.73 9.86 60.40 9.91C60.07 9.94 59.69 10 59.25 10.08C58.84 10.13 58.42 10.20 58.01 10.29C57.63 10.34 57.39 10.38 57.31 10.41C56.95 10.49 56.72 10.68 56.61 10.99V12.02V13.13C56.64 13.57 56.67 14.13 56.69 14.82C56.75 15.51 56.79 16.19 56.82 16.88C56.84 17.54 56.87 18.13 56.90 18.65C56.93 19.15 56.94 19.41 56.94 19.44L57.11 19.89C57.65 19.89 58.22 19.88 58.80 19.85C59.37 19.80 59.91 19.75 60.40 19.73C60.82 19.70 61.19 19.77 61.52 19.93C61.87 20.10 62.05 20.32 62.05 20.59C62.05 20.81 61.97 20.99 61.80 21.13C61.67 21.24 61.49 21.33 61.27 21.42C61.05 21.47 60.83 21.53 60.61 21.58C60.39 21.61 60.22 21.64 60.11 21.66C59.70 21.72 59.40 21.77 59.21 21.83C59.02 21.86 58.84 21.88 58.67 21.91C58.51 21.91 58.31 21.91 58.09 21.91C57.90 21.91 57.60 21.91 57.19 21.91C57.19 22.98 57.17 24.04 57.15 25.09C57.12 26.10 57.11 27.15 57.11 28.22C57.52 28.22 57.83 28.22 58.05 28.22C58.27 28.19 58.48 28.18 58.67 28.18C58.86 28.15 59.07 28.14 59.29 28.14C59.54 28.11 59.87 28.10 60.28 28.10C60.42 28.10 60.61 28.11 60.86 28.14C61.13 28.16 61.39 28.22 61.64 28.30C61.91 28.36 62.15 28.45 62.34 28.59C62.53 28.73 62.63 28.92 62.63 29.17C62.63 29.39 62.55 29.58 62.38 29.74C62.22 29.88 62.01 30.01 61.76 30.12C61.54 30.20 61.32 30.28 61.10 30.36C60.88 30.42 60.72 30.46 60.61 30.49H58.01H57.11C57.05 30.49 56.93 30.49 56.73 30.49C56.57 30.46 56.38 30.45 56.16 30.45C55.96 30.42 55.77 30.40 55.58 30.40C55.41 30.38 55.29 30.36 55.21 30.36C54.91 30.36 54.58 30.31 54.22 30.20C53.86 30.06 53.60 29.87 53.44 29.62V27.48ZM63.07 30.07C63.07 29.61 63.10 28.98 63.15 28.18C63.24 27.35 63.32 26.56 63.40 25.79C63.48 24.99 63.55 24.30 63.61 23.73C63.69 23.15 63.73 22.85 63.73 22.82L65.30 11.23C65.30 11.21 65.31 11.10 65.34 10.90C65.39 10.71 65.45 10.49 65.50 10.24C65.56 10 65.61 9.76 65.67 9.54C65.72 9.30 65.77 9.12 65.79 9.01C65.82 8.87 65.85 8.72 65.88 8.55C65.93 8.36 65.98 8.18 66.04 8.02C66.09 7.85 66.18 7.72 66.29 7.61C66.40 7.50 66.55 7.44 66.74 7.44H68.31C68.53 7.44 68.72 7.55 68.88 7.77C69.05 7.99 69.17 8.20 69.26 8.39C69.34 8.64 69.45 8.95 69.59 9.34C69.75 9.69 69.92 10.05 70.08 10.41C70.25 10.77 70.38 11.10 70.49 11.40C70.60 11.67 70.66 11.82 70.66 11.85C71.59 14.90 72.53 17.93 73.46 20.92C74.40 23.92 75.15 26.82 75.73 29.62V29.83C75.73 30.27 75.52 30.60 75.11 30.82C74.73 31.04 74.38 31.15 74.08 31.15C73.97 31.15 73.79 31.15 73.54 31.15C73.30 31.12 73.03 31.09 72.76 31.06C72.51 31.01 72.28 30.93 72.06 30.82C71.87 30.71 71.76 30.56 71.73 30.36L70.57 24.01C70.03 24.01 69.35 24.03 68.55 24.06C67.79 24.08 67.11 24.10 66.53 24.10L66.37 24.22C66.26 26.42 66 28.60 65.59 30.78L65.42 31.02C65.37 31.08 65.24 31.20 65.05 31.39C64.89 31.56 64.78 31.67 64.72 31.72H64.60C64.16 31.72 63.79 31.60 63.48 31.35C63.21 31.11 63.07 30.83 63.07 30.53V30.07ZM69.96 21.75V21.13C69.93 21.02 69.89 20.84 69.83 20.59C69.81 20.32 69.76 20.04 69.71 19.77C69.65 19.49 69.60 19.25 69.54 19.03C69.52 18.78 69.49 18.61 69.46 18.53C69.41 18.28 69.30 17.90 69.13 17.38C68.99 16.83 68.83 16.26 68.64 15.69C68.47 15.11 68.31 14.56 68.14 14.04C67.98 13.51 67.85 13.13 67.77 12.88L66.62 21.75H69.96ZM79.58 29.58V28.55C79.58 28.22 79.58 27.70 79.58 26.98C79.61 26.24 79.63 25.42 79.63 24.51C79.65 23.60 79.68 22.65 79.71 21.66C79.74 20.65 79.76 19.69 79.79 18.78C79.82 17.87 79.85 17.06 79.87 16.35C79.90 15.63 79.93 15.10 79.96 14.74C79.96 14.05 80 13.38 80.08 12.72C80.19 12.06 80.23 11.36 80.20 10.62H76.86C76.67 10.62 76.45 10.57 76.20 10.49C75.98 10.38 75.87 10.22 75.87 10.00C75.87 9.80 75.92 9.67 76 9.58C76.11 9.50 76.27 9.42 76.49 9.34C77.32 9.34 78.10 9.31 78.84 9.25C79.61 9.20 80.37 9.14 81.11 9.09C81.85 9.01 82.61 8.94 83.38 8.88C84.15 8.83 84.96 8.80 85.81 8.80H87.21L88 9.21V9.50C88 9.78 87.83 9.97 87.50 10.08C87.20 10.19 86.83 10.27 86.39 10.33C85.84 10.41 85.26 10.44 84.66 10.41C84.08 10.38 83.69 10.41 83.50 10.49V13.95C83.50 15.52 83.54 17.07 83.63 18.61C83.71 20.15 83.75 21.66 83.75 23.15C83.75 23.86 83.75 24.54 83.75 25.17C83.78 25.80 83.79 26.42 83.79 27.02C83.79 27.63 83.76 28.23 83.71 28.84C83.68 29.44 83.61 30.09 83.50 30.78C83.36 30.94 83.19 31.08 82.97 31.19C82.75 31.27 82.54 31.34 82.35 31.39H81.32C81.01 31.39 80.70 31.39 80.37 31.39C80.04 31.37 79.78 31.16 79.58 30.78V29.58Z" fill="var(--text)"></path></svg></a></li><li class="h-full"><a class="flex h-full items-center font-medium px-2 text-base md:px-4 md:text-lg" href="/scaling/summary">Scaling</a></li><li class="h-full"><a class="flex h-full items-center font-medium px-2 text-base md:px-4 md:text-lg border-b-2 border-current pt-0.5 text-pink-900 dark:text-pink-200" href="/bridges/summary">Bridges</a></li></ul><button id="sidebar-menu-open" class="block lg:hidden"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Open menu" class="block"><rect x="2" y="5" width="20" height="2"></rect><rect x="2" y="11" width="20" height="2"></rect><rect x="2" y="17" width="20" height="2"></rect></svg></button><div class="hidden h-full items-center gap-5 lg:flex"><ul class="flex items-center gap-4"><li><a rel="noopener noreferrer" target="_blank" href="https://twitter.com/l2beat" title="Twitter"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="X logo"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://discord.gg/eaVKXPmtWk" title="Discord"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Discord logo"><path fill-rule="evenodd" d="M20.32 4.66C18.79 3.95 17.15 3.44 15.43 3.14C15.4 3.13 15.37 3.15 15.35 3.18C15.14 3.55 14.91 4.04 14.75 4.43C12.9 4.15 11.07 4.15 9.26 4.43C9.09 4.03 8.85 3.55 8.64 3.18C8.62 3.15 8.59 3.14 8.56 3.14C6.85 3.44 5.21 3.95 3.68 4.66C3.66 4.66 3.65 4.67 3.64 4.68C0.53 9.33 -0.32 13.87 0.1 18.34C0.1 18.37 0.11 18.39 0.13 18.4C2.18 19.91 4.17 20.82 6.12 21.43C6.15 21.44 6.19 21.43 6.21 21.4C6.67 20.77 7.08 20.11 7.43 19.41C7.45 19.37 7.43 19.32 7.39 19.3C6.74 19.05 6.12 18.75 5.52 18.41C5.47 18.38 5.47 18.31 5.51 18.28C5.64 18.19 5.76 18.09 5.88 17.99C5.91 17.97 5.94 17.97 5.96 17.98C9.89 19.77 14.14 19.77 18.02 17.98C18.05 17.97 18.08 17.97 18.1 17.99C18.22 18.09 18.35 18.19 18.47 18.28C18.52 18.31 18.51 18.38 18.47 18.41C17.87 18.76 17.25 19.05 16.59 19.3C16.55 19.32 16.53 19.37 16.55 19.41C16.91 20.11 17.33 20.77 17.78 21.4C17.8 21.43 17.83 21.44 17.86 21.43C19.82 20.82 21.81 19.91 23.87 18.4C23.88 18.39 23.89 18.37 23.9 18.34C24.4 13.17 23.06 8.67 20.35 4.68C20.34 4.67 20.33 4.66 20.32 4.66ZM8.02 15.62C6.84 15.62 5.86 14.53 5.86 13.2C5.86 11.86 6.82 10.78 8.02 10.78C9.23 10.78 10.2 11.87 10.18 13.2C10.18 14.53 9.22 15.62 8.02 15.62ZM15.99 15.62C14.81 15.62 13.84 14.53 13.84 13.2C13.84 11.86 14.79 10.78 15.99 10.78C17.21 10.78 18.17 11.87 18.15 13.2C18.15 14.53 17.21 15.62 15.99 15.62Z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://github.com/l2beat/l2beat" title="Github"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Github logo"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://www.linkedin.com/company/l2beat/" title="LinkedIn"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="LinkedIn logo"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/channel/UCDrl-fNXFjOoykr4lQij9BA/videos" title="YouTube"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="YouTube logo"><path d="M19.615 3.184C16.011 2.938 7.984 2.939 4.385 3.184C0.488 3.45 0.029 5.804 0 12C0.029 18.185 0.484 20.549 4.385 20.816C7.985 21.061 16.011 21.062 19.615 20.816C23.512 20.55 23.971 18.196 24 12C23.971 5.815 23.516 3.451 19.615 3.184ZM9 16V8L17 11.993L9 16Z"></path></svg></a></li><li><a rel="noopener noreferrer" target="_blank" href="https://medium.com/l2beat" title="Medium"><svg width="24" height="24" viewBox="0 0 24 15" fill="var(--text)" role="img" aria-label="Medium logo"><path d="M6.8 0.600098C5.90701 0.600098 5.02277 0.775985 4.19775 1.11772C3.37274 1.45945 2.62311 1.96033 1.99167 2.59177C1.36024 3.22321 0.859351 3.97284 0.517619 4.79785C0.175887 5.62286 0 6.50711 0 7.4001C0 8.29309 0.175887 9.17733 0.517619 10.0023C0.859351 10.8274 1.36024 11.577 1.99167 12.2084C2.62311 12.8399 3.37274 13.3407 4.19775 13.6825C5.02277 14.0242 5.90701 14.2001 6.8 14.2001C7.69299 14.2001 8.57723 14.0242 9.40225 13.6825C10.2273 13.3407 10.9769 12.8399 11.6083 12.2084C12.2398 11.577 12.7406 10.8274 13.0824 10.0023C13.4241 9.17733 13.6 8.29309 13.6 7.4001C13.6 6.50711 13.4241 5.62286 13.0824 4.79785C12.7406 3.97284 12.2398 3.22321 11.6083 2.59177C10.9769 1.96033 10.2273 1.45945 9.40225 1.11772C8.57723 0.775985 7.69299 0.600098 6.8 0.600098ZM17.6 1.4001C17.1798 1.4001 16.7637 1.55529 16.3754 1.85682C15.9872 2.15835 15.6344 2.60031 15.3373 3.15746C15.0401 3.71461 14.8044 4.37604 14.6436 5.104C14.4828 5.83195 14.4 6.61217 14.4 7.4001C14.4 8.18803 14.4828 8.96824 14.6436 9.6962C14.8044 10.4242 15.0401 11.0856 15.3373 11.6427C15.6344 12.1999 15.9872 12.6418 16.3754 12.9434C16.7637 13.2449 17.1798 13.4001 17.6 13.4001C18.0202 13.4001 18.4363 13.2449 18.8246 12.9434C19.2128 12.6418 19.5656 12.1999 19.8627 11.6427C20.1599 11.0856 20.3956 10.4242 20.5564 9.6962C20.7172 8.96824 20.8 8.18803 20.8 7.4001C20.8 6.61217 20.7172 5.83195 20.5564 5.104C20.3956 4.37604 20.1599 3.71461 19.8627 3.15746C19.5656 2.60031 19.2128 2.15835 18.8246 1.85682C18.4363 1.55529 18.0202 1.4001 17.6 1.4001ZM22.8 2.2001C22.4817 2.2001 22.1765 2.74795 21.9515 3.72314C21.7264 4.69833 21.6 6.02097 21.6 7.4001C21.6 8.77922 21.7264 10.1019 21.9515 11.0771C22.1765 12.0522 22.4817 12.6001 22.8 12.6001C23.1183 12.6001 23.4235 12.0522 23.6485 11.0771C23.8736 10.1019 24 8.77922 24 7.4001C24 6.02097 23.8736 4.69833 23.6485 3.72314C23.4235 2.74795 23.1183 2.2001 22.8 2.2001Z"></path></svg></a></li></ul><div class="hidden h-8 w-px bg-gray-300 dark:bg-gray-700 md:block"></div><ul class="flex h-full items-center gap-1.5"><li class="h-full"><a rel="noopener noreferrer" target="_blank" class="flex h-full items-center px-2 font-medium" href="https://gov.l2beat.com/">Forum</a></li><li class="h-full"><a class="flex h-full items-center font-medium px-2" href="/donate">Donate</a></li><li class="h-full"><a class="flex h-full items-center font-medium px-2" href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">Governance</a></li><li class="h-full"><a class="flex h-full items-center font-medium px-2" href="/faq">FAQ</a></li><li class="h-full"><a rel="noopener noreferrer" target="_blank" class="flex h-full items-center px-2 font-medium" href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">Jobs</a></li></ul><div class="hidden h-8 w-px bg-gray-300 dark:bg-gray-700 md:block"></div><button data-role="dark-theme-toggle" class="flex gap-4 font-medium" title="Change color scheme"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Toggle light mode" class="hidden dark:block"><path d="M11.9875 0.78916C11.7756 0.792472 11.5736 0.87972 11.426 1.03176C11.2784 1.18379 11.1971 1.38819 11.2 1.6001V4.0001C11.1985 4.10611 11.2181 4.21136 11.2576 4.30973C11.2971 4.40811 11.3558 4.49764 11.4302 4.57314C11.5047 4.64863 11.5934 4.70858 11.6912 4.7495C11.789 4.79042 11.8939 4.81149 12 4.81149C12.106 4.81149 12.211 4.79042 12.3088 4.7495C12.4066 4.70858 12.4953 4.64863 12.5697 4.57314C12.6441 4.49764 12.7028 4.40811 12.7424 4.30973C12.7819 4.21136 12.8015 4.10611 12.8 4.0001V1.6001C12.8014 1.49307 12.7814 1.38683 12.7411 1.28768C12.7007 1.18852 12.6409 1.09847 12.5652 1.02286C12.4894 0.947239 12.3992 0.887594 12.3 0.847452C12.2008 0.80731 12.0945 0.787488 11.9875 0.78916ZM4.63747 3.83916C4.47845 3.83951 4.32315 3.88724 4.19139 3.97625C4.05962 4.06526 3.95736 4.19151 3.89767 4.3389C3.83798 4.48628 3.82356 4.64811 3.85625 4.80373C3.88894 4.95935 3.96726 5.10169 4.08122 5.2126L5.77809 6.90947C5.85181 6.98625 5.9401 7.04755 6.03781 7.08977C6.13551 7.132 6.24066 7.15431 6.34709 7.15539C6.45352 7.15647 6.5591 7.13631 6.65764 7.09607C6.75618 7.05584 6.8457 6.99635 6.92096 6.92109C6.99622 6.84583 7.05571 6.75631 7.09594 6.65777C7.13618 6.55923 7.15634 6.45365 7.15526 6.34722C7.15418 6.24078 7.13187 6.13564 7.08964 6.03794C7.04742 5.94023 6.98612 5.85194 6.90934 5.77822L5.21247 4.08135C5.13773 4.00452 5.04832 3.9435 4.94955 3.90189C4.85077 3.86029 4.74465 3.83896 4.63747 3.83916ZM19.3375 3.83916C19.1296 3.84535 18.9324 3.93222 18.7875 4.08135L17.0906 5.77822C17.0138 5.85194 16.9525 5.94023 16.9103 6.03794C16.8681 6.13564 16.8458 6.24078 16.8447 6.34722C16.8436 6.45365 16.8638 6.55922 16.904 6.65776C16.9442 6.7563 17.0037 6.84583 17.079 6.92109C17.1542 6.99635 17.2438 7.05584 17.3423 7.09607C17.4408 7.1363 17.5464 7.15647 17.6528 7.15539C17.7593 7.1543 17.8644 7.132 17.9621 7.08977C18.0598 7.04754 18.1481 6.98625 18.2218 6.90947L19.9187 5.2126C20.0343 5.10023 20.1133 4.95555 20.1452 4.79754C20.1772 4.63952 20.1607 4.47554 20.0979 4.32707C20.035 4.1786 19.9288 4.05257 19.7931 3.96551C19.6574 3.87845 19.4986 3.83441 19.3375 3.83916ZM12 6.4001C10.5148 6.4001 9.09037 6.9901 8.04017 8.0403C6.98997 9.0905 6.39997 10.5149 6.39997 12.0001C6.39997 13.4853 6.98997 14.9097 8.04017 15.9599C9.09037 17.0101 10.5148 17.6001 12 17.6001C13.4852 17.6001 14.9096 17.0101 15.9598 15.9599C17.01 14.9097 17.6 13.4853 17.6 12.0001C17.6 10.5149 17.01 9.0905 15.9598 8.0403C14.9096 6.9901 13.4852 6.4001 12 6.4001ZM1.59997 11.2001C1.49396 11.1986 1.38871 11.2182 1.29033 11.2577C1.19196 11.2972 1.10242 11.3559 1.02693 11.4304C0.951431 11.5048 0.891482 11.5935 0.850564 11.6913C0.809646 11.7891 0.788574 11.8941 0.788574 12.0001C0.788574 12.1061 0.809646 12.2111 0.850564 12.3089C0.891482 12.4067 0.951431 12.4954 1.02693 12.5698C1.10242 12.6443 1.19196 12.7029 1.29033 12.7425C1.38871 12.782 1.49396 12.8016 1.59997 12.8001H3.99997C4.10598 12.8016 4.21123 12.782 4.3096 12.7425C4.40798 12.7029 4.49751 12.6443 4.57301 12.5698C4.64851 12.4954 4.70845 12.4067 4.74937 12.3089C4.79029 12.2111 4.81136 12.1061 4.81136 12.0001C4.81136 11.8941 4.79029 11.7891 4.74937 11.6913C4.70845 11.5935 4.64851 11.5048 4.57301 11.4304C4.49751 11.3559 4.40798 11.2972 4.3096 11.2577C4.21123 11.2182 4.10598 11.1986 3.99997 11.2001H1.59997ZM20 11.2001C19.894 11.1986 19.7887 11.2182 19.6903 11.2577C19.592 11.2972 19.5024 11.3559 19.4269 11.4304C19.3514 11.5048 19.2915 11.5935 19.2506 11.6913C19.2096 11.7891 19.1886 11.8941 19.1886 12.0001C19.1886 12.1061 19.2096 12.2111 19.2506 12.3089C19.2915 12.4067 19.3514 12.4954 19.4269 12.5698C19.5024 12.6443 19.592 12.7029 19.6903 12.7425C19.7887 12.782 19.894 12.8016 20 12.8001H22.4C22.506 12.8016 22.6112 12.782 22.7096 12.7425C22.808 12.7029 22.8975 12.6443 22.973 12.5698C23.0485 12.4954 23.1085 12.4067 23.1494 12.3089C23.1903 12.2111 23.2114 12.1061 23.2114 12.0001C23.2114 11.8941 23.1903 11.7891 23.1494 11.6913C23.1085 11.5935 23.0485 11.5048 22.973 11.4304C22.8975 11.3559 22.808 11.2972 22.7096 11.2577C22.6112 11.2182 22.506 11.1986 22.4 11.2001H20ZM6.32809 16.8485C6.12025 16.8547 5.92299 16.9416 5.77809 17.0907L4.08122 18.7876C4.00444 18.8613 3.94315 18.9496 3.90092 19.0473C3.85869 19.145 3.83639 19.2502 3.8353 19.3566C3.83422 19.463 3.85439 19.5686 3.89462 19.6671C3.93485 19.7657 3.99434 19.8552 4.0696 19.9305C4.14486 20.0057 4.23439 20.0652 4.33293 20.1054C4.43147 20.1457 4.53704 20.1658 4.64348 20.1648C4.74991 20.1637 4.85505 20.1414 4.95275 20.0991C5.05046 20.0569 5.13875 19.9956 5.21247 19.9188L6.90934 18.222C7.02495 18.1096 7.1039 17.9649 7.13587 17.8069C7.16784 17.6489 7.15132 17.4849 7.08849 17.3364C7.02566 17.188 6.91944 17.0619 6.78375 16.9749C6.64806 16.8878 6.48924 16.8438 6.32809 16.8485ZM17.6484 16.8485C17.4893 16.8486 17.3337 16.8961 17.2017 16.985C17.0697 17.0739 16.9672 17.2001 16.9073 17.3475C16.8475 17.495 16.8329 17.657 16.8655 17.8127C16.8982 17.9685 16.9765 18.111 17.0906 18.222L18.7875 19.9188C18.8612 19.9956 18.9495 20.0569 19.0472 20.0991C19.1449 20.1414 19.25 20.1637 19.3565 20.1648C19.4629 20.1658 19.5685 20.1457 19.667 20.1054C19.7655 20.0652 19.8551 20.0057 19.9303 19.9305C20.0056 19.8552 20.0651 19.7657 20.1053 19.6671C20.1455 19.5686 20.1657 19.463 20.1646 19.3566C20.1635 19.2502 20.1412 19.145 20.099 19.0473C20.0568 18.9496 19.9955 18.8613 19.9187 18.7876L18.2218 17.0907C18.1473 17.0141 18.0581 16.9532 17.9596 16.9116C17.8612 16.87 17.7553 16.8485 17.6484 16.8485ZM11.9875 19.1892C11.7756 19.1925 11.5736 19.2797 11.426 19.4318C11.2784 19.5838 11.1971 19.7882 11.2 20.0001V22.4001C11.1985 22.5061 11.2181 22.6114 11.2576 22.7097C11.2971 22.8081 11.3558 22.8976 11.4302 22.9731C11.5047 23.0486 11.5934 23.1086 11.6912 23.1495C11.789 23.1904 11.8939 23.2115 12 23.2115C12.106 23.2115 12.211 23.1904 12.3088 23.1495C12.4066 23.1086 12.4953 23.0486 12.5697 22.9731C12.6441 22.8976 12.7028 22.8081 12.7424 22.7097C12.7819 22.6114 12.8015 22.5061 12.8 22.4001V20.0001C12.8014 19.8931 12.7814 19.7868 12.7411 19.6877C12.7007 19.5885 12.6409 19.4985 12.5652 19.4229C12.4894 19.3472 12.3992 19.2876 12.3 19.2474C12.2008 19.2073 12.0945 19.1875 11.9875 19.1892Z"></path></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Toggle dark mode" class="block dark:hidden"><path fill-rule="evenodd" d="M22.2 6.82C20.96 5.69 19.31 5 17.5 5C13.63 5 10.5 8.13 10.5 12C10.5 15.87 13.63 19 17.5 19C19.31 19 20.96 18.31 22.2 17.18C20.35 20.65 16.7 23 12.5 23C6.42 23 1.5 18.08 1.5 12C1.5 5.92 6.42 1 12.5 1C16.7 1 20.35 3.35 22.2 6.82Z"></path></svg></button></div></nav></div><div class="max-w-[1216px] mx-auto h-full leading-[1.15] md:px-12 px-4"><nav class="font-base md:mt-10"><ul class="hidden w-full items-center justify-around md:flex rounded-lg border-2 border-gray-200 dark:border-gray-850"><li class="relative h-16 w-full text-lg font-bold border-r-2 border-r-transparent before:absolute before:z-10 before:-top-0.5 before:-left-0.5 before:-right-0.5 before:-bottom-0.5 before:bg-gradient-to-r before:from-purple-100 before:to-pink-100 before:rounded-lg"><a href="/bridges/summary" class="relative z-20 flex h-full w-full items-center justify-center gap-4 rounded-md bg-purple-300 dark:bg-purple-800"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Summary"><g clip-path="url(#clip0_4_3317)"><path d="M11.9575 1.39722C6.07957 1.39722 1.31488 6.16191 1.31488 12.0398C1.31488 17.9177 6.07957 22.6824 11.9575 22.6824C14.8182 22.6824 17.4097 21.5479 19.3221 19.7115L11.9575 12.0398V1.39722Z" fill="#50E6FF"></path><path d="M22.6001 12.0398C22.6001 6.16191 17.8354 1.39722 11.9575 1.39722V12.0398H22.6001Z" fill="#0078D4"></path><path d="M22.6001 12.0398H11.9575L19.3221 19.7115C21.3389 17.7746 22.6001 15.057 22.6001 12.0398Z" fill="#00A5FF"></path><path d="M16.9038 0.0786133L11.9492 12.0399L23.9997 7.33446C22.762 4.16581 20.2944 1.4833 16.9038 0.0786133Z" fill="#D864FF"></path></g><defs><clipPath id="clip0_4_3317"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg><span class="hidden lg:inline">Summary</span><span class="lg:hidden">Summary</span></a></li><li class="relative h-16 w-full text-lg font-bold"><a href="/bridges/risk" class="relative z-20 flex h-full w-full items-center justify-center gap-4 rounded-md"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" role="img" aria-label="Risk icon"><path d="M21.5932 4.8C21.5932 4.8 22.1926 18.6 12.1036 24C1.80702 18.6 2.40642 4.8 2.40642 4.8C7.20342 4.8 11.9998 0 11.9998 0C11.9998 0 16.1968 4.8 21.5932 4.8Z" fill="#FFC107"></path><path d="M10.7998 16.8852C10.7998 16.7238 10.828 16.5762 10.8856 16.4376C10.942 16.3008 11.023 16.182 11.1274 16.0824C11.23 15.9816 11.3566 15.903 11.5018 15.8466C11.6482 15.7914 11.8126 15.762 11.9962 15.762C12.1798 15.762 12.3454 15.7914 12.493 15.8466C12.643 15.903 12.7696 15.9816 12.8722 16.0824C12.9772 16.182 13.0582 16.3008 13.114 16.4376C13.1716 16.5762 13.1998 16.7238 13.1998 16.8852C13.1998 17.0472 13.1716 17.1948 13.114 17.3292C13.0576 17.4642 12.9766 17.5806 12.8722 17.682C12.7696 17.7816 12.643 17.8596 12.493 17.9172C12.3454 17.9724 12.1798 18 11.9962 18C11.812 18 11.6482 17.9724 11.5018 17.9166C11.3566 17.859 11.23 17.781 11.1274 17.6814C11.0224 17.58 10.9414 17.4636 10.8856 17.3286C10.828 17.1942 10.7998 17.0466 10.7998 16.8852ZM12.8878 14.4H11.104L10.8514 7.19995H13.1398L12.8878 14.4Z" fill="#5D4037"></path></svg><span class="hidden lg:inline">Risk Analysis</span><span class="lg:hidden">Risks</span></a></li></ul><div class="-mx-4 overflow-x-auto border-b border-b-gray-200 bg-gray-100 dark:border-b-gray-850 dark:bg-gray-950 md:hidden"><ul class="mx-auto flex w-min items-center gap-2 py-3 px-4"><li class="flex w-28 flex-shrink-0"><a href="/bridges/summary" class="block w-full rounded py-1 text-center font-bold bg-gradient-to-r from-purple-100 to-pink-100 text-white"><span class="">Summary </span></a></li><li class="flex w-28 flex-shrink-0"><a href="/bridges/risk" class="block w-full rounded py-1 text-center font-bold bg-white dark:bg-gray-850"><span class="">Risks </span></a></li></ul></div></nav><main class="mt-4 md:mt-12"><p class="my-4 mx-4 rounded-lg bg-yellow-500 p-2 text-center text-base font-medium text-black">L2BEAT Bridges is a work in progress. You might find incomplete research or inconsistent naming. Join our discord to suggest improvements!</p><section id="chart" data-settings-id="bridges-tvl" data-role="chart" data-initial-type="{&quot;type&quot;:&quot;bridges-tvl&quot;,&quot;includeCanonical&quot;:false}" class="group/chart mt-4"><header class="mb-4 flex flex-col justify-between text-base md:flex-row" data-role="chart-header"><div><h1 class="mb-1 text-3xl font-bold">Value Locked</h1><p class="hidden text-gray-500 dark:text-gray-600 md:block">Sum of all canonically bridged, externally bridged, and natively minted tokens, converted to <span data-role="chart-header-currency">USD</span></p></div><div class="flex flex-row items-baseline gap-2 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 md:flex-col md:items-end md:gap-1"><p class="text-right text-lg font-bold md:text-3xl" data-role="chart-header-value">$5.43&hairsp;B</p><p class="text-right text-xs font-bold md:text-base"><span data-role="chart-header-value-change">
   <span class="relative text-red-300">
     
